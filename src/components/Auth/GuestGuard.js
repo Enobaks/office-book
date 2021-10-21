@@ -7,9 +7,9 @@ const GuestGuard = ({ children }) => {
     const account = useSelector((state) => state.account);
     const { isLoggedIn } = account;
 
-    if (isLoggedIn) {
-        return <Redirect to={BASE_URL} />;
-    }
+    // if (isLoggedIn) {
+    //     return <Redirect to={BASE_URL} />;
+    // }
 
     return <React.Fragment>{children}</React.Fragment>;
 };

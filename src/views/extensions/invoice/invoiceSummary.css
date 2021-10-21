@@ -1,0 +1,86 @@
+.status {
+  background-color: #f4f7fa;
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 0 3px;
+}
+.filter-status {
+  padding: 4px 15px;
+  min-height: auto;
+  position: relative;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+/* .draft{
+    background-color: #d1dce8;
+    color: #31608a;
+}
+.success {
+    color: #027d02;
+    background: #6dff69f2;
+}
+.pending{
+    background: #f0df7d;
+    color: #808009;
+} */
+.search {
+  font-size: 15px !important;
+  font-weight: 500;
+  width: 10rem;
+  color: rgb(57, 58, 61) !important;
+  box-sizing: border-box;
+  height: 31px;
+  border: 1px solid rgb(141, 144, 150) !important;
+  background: #f4f7fa none repeat scroll 0% 0% !important;
+  display: block;
+  padding: 5px;
+  border-radius: 4px !important;
+  outline: currentcolor none medium;
+  opacity: 100;
+}
+.company-input,
+.client-input,
+.product-input,
+.item-qty, .item-name, .item-price, .add-btn {
+  height: 2.5rem;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid rgb(141, 144, 150) !important;
+}
+.invoice-btn {
+  background: #2585a8;
+  color: #fff;
+  padding: 0.375rem 0.75rem;
+}
+.invoice-btn:hover {
+  border: 1px solid #2585a8;
+  color: #2585a8;
+  background: #f4f7fa;
+}
+.short-input label:not(:first-child),
+.payment-wrap label:not(:first-child) {
+  margin-left: 1rem;
+}
+.bill,
+.items {
+  font-size: 16px !important;
+}
+.item-qty {
+  width: 5rem;
+}
+.add-btn-wrap{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.add-btn{
+  width: 80%;
+  background: rgb(141, 144, 150);
+  color: #fff;
+}
+.add-btn-wrap:hover{
+  opacity: .8;
+}

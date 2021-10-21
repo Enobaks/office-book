@@ -53,7 +53,7 @@ const Landing = () => {
                             </button>
                             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul className="navbar-nav mr-auto" />
-                                <ul className="navbar-nav my-2 my-lg-0">
+                                <ul className="navbar-nav my-2 my-lg-0 align-items-center">
                                     <li className="nav-item">
                                         <a className="nav-link page-scroll" href="#main">
                                             Home
@@ -64,7 +64,7 @@ const Landing = () => {
                                             Important
                                         </a>
                                     </li>
-                                    <li className="nav-item dropdown">
+                                    {/* <li className="nav-item dropdown">
                                         <Link
                                             className="nav-link dropdown-toggle"
                                             to="#"
@@ -87,7 +87,7 @@ const Landing = () => {
                                                 Level 3
                                             </Link>
                                         </div>
-                                    </li>
+                                    </li> */}
                                     <li className="nav-item">
                                         <a className="nav-link page-scroll" href="#features">
                                             Benefits
@@ -106,6 +106,11 @@ const Landing = () => {
                                     <li className="nav-item">
                                         <Link className="nav-link" to="#">
                                             Contact
+                                        </Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/auth/signin">
+                                            <button className="btn signup-btn">Sign In</button>
                                         </Link>
                                     </li>
                                 </ul>

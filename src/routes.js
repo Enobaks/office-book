@@ -717,11 +717,11 @@ const routes = [
                 path: '/file-upload',
                 component: lazy(() => import('./views/extensions/FileUpload'))
             },
-            {
-                exact: true,
-                path: '/full-calendar',
-                component: lazy(() => import('./views/extensions/FullEventCalendar'))
-            },
+            // {
+            //     exact: true,
+            //     path: '/full-calendar',
+            //     component: lazy(() => import('./views/extensions/FullEventCalendar'))
+            // },
             {
                 exact: true,
                 path: '/invoice/invoice-basic',
