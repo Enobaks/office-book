@@ -6,10 +6,6 @@ import "./invoiceSummary.css";
 
 const InvoiceSummary = () => {
   const [show, setShow] = useState(false);
-  const [items, setItems] = useState([
-    { itemName: "", qty: "", price: "", totalItem: "" },
-    { itemName: "", qty: "", price: "", totalItem: "" },
-  ]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => console.log(show);
@@ -352,35 +348,33 @@ const InvoiceSummary = () => {
                 </thead>
 
                 <form>
-                  {items.map((item, index) => {
-                    <tbody key={index}>
-                      <td>
-                        <input
-                          name="item-name"
-                          type="text"
-                          className="item-name"
-                        />
-                      </td>
-                      <td>
-                        <input
-                          name="item-qty"
-                          type="number"
-                          className="item-qty"
-                        />
-                      </td>
-                      <td>
-                        <input
-                          name="item-price"
-                          type="number"
-                          className="item-price w-10"
-                        />
-                      </td>
-                      <td>Total item</td>
-                      <td>
-                        <i class="fa fa-trash"></i>
-                      </td>
-                    </tbody>;
-                  })}
+                  <tbody>
+                    <td>
+                      <input
+                        name="item-name"
+                        type="text"
+                        className="item-name"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        name="item-qty"
+                        type="number"
+                        className="item-qty"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        name="item-price"
+                        type="number"
+                        className="item-price w-10"
+                      />
+                    </td>
+                    <td>Total item</td>
+                    <td>
+                      <i class="fa fa-trash"></i>
+                    </td>
+                  </tbody>
                 </form>
               </Table>
               <div className="add-btn-wrap">
