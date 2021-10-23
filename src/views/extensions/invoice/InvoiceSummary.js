@@ -8,7 +8,25 @@ const InvoiceSummary = () => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
-  const handleShow = () => console.log(show);
+
+  const [itemList, setItemList] = useState([]);
+
+  const handleChange = (e, index) => {
+    const { name, value } = e.target;
+    const list = [...itemList];
+    list[index][name] = value;
+    setItemList(list);
+  };
+
+  const handleAddInput = () => {
+    setItemList([...itemList, { itemName: "", qty: "", price: "" }]);
+  };
+
+  const handleRemoveInput = (index) => {
+    const list = [...itemList];
+    list.splice(index, 1);
+    setItemList(list);
+  };
 
   return (
     <React.Fragment>
@@ -347,38 +365,49 @@ const InvoiceSummary = () => {
                   </tr>
                 </thead>
 
-                <form>
-                  <tbody>
-                    <td>
-                      <input
-                        name="item-name"
-                        type="text"
-                        className="item-name"
-                      />
-                    </td>
-                    <td>
-                      <input
-                        name="item-qty"
-                        type="number"
-                        className="item-qty"
-                      />
-                    </td>
-                    <td>
-                      <input
-                        name="item-price"
-                        type="number"
-                        className="item-price w-10"
-                      />
-                    </td>
-                    <td>Total item</td>
-                    <td>
-                      <i class="fa fa-trash"></i>
-                    </td>
-                  </tbody>
-                </form>
+                {itemList.map((item, i) => {
+                  return (
+                    <tbody key={i}>
+                      <td>
+                        <input
+                          name="itemName"
+                          type="text"
+                          className="item-name"
+                          value={item.itemName}
+                          onChange={(e) => handleChange(e, i)}
+                        />
+                      </td>
+                      <td>
+                        <input
+                          name="quantity"
+                          type="number"
+                          className="item-qty"
+                          value={item.quantity}
+                          onChange={(e) => handleChange(e, i)}
+                        />
+                      </td>
+                      <td>
+                        <input
+                          name="price"
+                          type="number"
+                          className="item-price w-10"
+                          value={item.price}
+                          onChange={(e) => handleChange(e, i)}
+                        />
+                      </td>
+                      <td>Total item</td>
+                      <td>
+                        <i
+                          class="fa fa-trash"
+                          onClick={() => handleRemoveInput(i)}
+                        ></i>
+                      </td>
+                    </tbody>
+                  );
+                })}
               </Table>
               <div className="add-btn-wrap">
-                <button className="add-btn">
+                <button className="add-btn" onClick={handleAddInput}>
                   <i class="fas fa-plus mr-2"></i>Add New Item
                 </button>
               </div>
