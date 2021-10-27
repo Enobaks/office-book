@@ -3,31 +3,41 @@ import { Row, Col, Card, Table, Modal, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 // import ReChartSalesExpenses from "./chart/ReChartSalesExpenses";
 import "./invoiceSummary.css";
-
+import { ADD_ITEM } from "../../../store/actions";
+import { useSelector, useDispatch } from 'react-redux';
 const InvoiceSummary = () => {
   const [show, setShow] = useState(false);
+  const [item, setItem] = useState([])
 
   const handleClose = () => setShow(false);
+  const handleShow = () => console.log(show);
+  const statsDefault = ['Paid', 'Pending', 'Draft']
+  const dispatch = useDispatch()
+  const {invoiceData} = useSelector(state => state.invoice)
+  const [invDatas, setInvDatas] = useState({
+      date: "",
+      no: 0,
+      customer: '',
+      amount:0,
+      stats: statsDefault[Math.floor(Math.random() * statsDefault.length)]
+  })
+  const defaultData= {
+    date: "",
+    no: 0,
+    customer: '',
+    amount:0,
+    stats: statsDefault[Math.floor(Math.random() * statsDefault.length)]
 
-  const [itemList, setItemList] = useState([]);
-
-  const handleChange = (e, index) => {
-    const { name, value } = e.target;
-    const list = [...itemList];
-    list[index][name] = value;
-    setItemList(list);
-  };
-
-  const handleAddInput = () => {
-    setItemList([...itemList, { itemName: "", qty: "", price: "" }]);
-  };
-
-  const handleRemoveInput = (index) => {
-    const list = [...itemList];
-    list.splice(index, 1);
-    setItemList(list);
-  };
-
+  }
+  const handleClick = ()=>{
+    const allDatas = [...invoiceData, invDatas]
+    dispatch({
+      type:ADD_ITEM,
+      payload: allDatas
+    })
+    setInvDatas({...invDatas, ...defaultData})
+    setShow(false)
+  }
   return (
     <React.Fragment>
       <Row>
@@ -140,45 +150,23 @@ const InvoiceSummary = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>10/7/2021</td>
-                    <td>54822</td>
-                    <td>Customer 1</td>
-                    <td>$80.00</td>
-                    <td>
-                      <label className="filter-status draft">Draft</label>
-                    </td>
-                    <td>
-                      <Link to="/invoice/invoice-basic">View</Link>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>11/7/2021</td>
-                    <td>54823</td>
-                    <td>Customer 2</td>
-                    <td> $75.00</td>
-                    <td>
-                      <label className="filter-status success">Paid</label>
-                    </td>
-                    <td>
-                      <Link to="/invoice/invoice-basic">View</Link>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>11/7/2021</td>
-                    <td>54824</td>
-                    <td>Customer 3</td>
-                    <td>$99.00</td>
-                    <td>
-                      <label className="filter-status pending">Pending</label>
-                    </td>
-                    <td>
-                      <Link to="/invoice/invoice-basic">View</Link>
-                    </td>
-                  </tr>
+                  {(invoiceData && invoiceData.length > 1) &&
+                    invoiceData.map((values, index)=>(
+                      <tr>
+                        <th scope="row">{index + 1}</th>
+                        <td>{values.date}</td>
+                        <td>{values.no}</td>
+                        <td>{values.customer + (index+1)}</td>
+                        <td>{`$ ${values.amount}`}</td>
+                        <td>
+                          <label className={`filter-status ${values.stats === 'Paid' ? 'success' :values.stats === 'Pending' ? 'pending' : 'draft'}`}>{values.stats}</label>
+                        </td>
+                        <td>
+                          <Link to="/invoice/invoice-basic">View</Link>
+                        </td>
+                      </tr>
+                    ))
+                  }
                 </tbody>
               </Table>
             </Card.Body>
@@ -206,37 +194,31 @@ const InvoiceSummary = () => {
               type="text"
               className="w-100 company-input mb-3"
             />
-            <div className="short-input my-3 row">
-              <div className="short-cont d-flex flex-column col-md-4">
-                <label htmlFor="companyEmail" className="mr-1">
-                  Email
-                </label>
-                <input
-                  name="companyEmail"
-                  type="text"
-                  className="w-30 company-input"
-                />
-              </div>
-              <div className="short-cont d-flex flex-column col-md-4">
-                <label htmlFor="companyNo" className="mr-1">
-                  Phone No
-                </label>
-                <input
-                  name="companyNo"
-                  type="text"
-                  className="w-30 company-input"
-                />
-              </div>
-              <div className="short-cont d-flex flex-column col-md-4">
-                <label htmlFor="companyWebsite" className="mr-1">
-                  Website
-                </label>
-                <input
-                  name="companyWebsite"
-                  type="text"
-                  className="w-30 company-input"
-                />
-              </div>
+            <div className="short-input my-3">
+              <label htmlFor="companyEmail" className="mr-1">
+                Email
+              </label>
+              <input
+                name="companyEmail"
+                type="text"
+                className="w-30 company-input"
+              />
+              <label htmlFor="companyNo" className="mr-1">
+                Phone No
+              </label>
+              <input
+                name="companyNo"
+                type="text"
+                className="w-30 company-input"
+              />
+              <label htmlFor="companyWebsite" className="mr-1">
+                Website
+              </label>
+              <input
+                name="companyWebsite"
+                type="text"
+                className="w-30 company-input"
+              />
             </div>
             <label htmlFor="companyAddress">Address</label>
             <input
@@ -244,37 +226,31 @@ const InvoiceSummary = () => {
               type="text"
               className="w-100 company-input mb-3"
             />
-            <div className="short-input my-3 row">
-              <div className="short-cont d-flex col-md-4 flex-column">
-                <label htmlFor="companyCity" className="mr-1">
-                  City
-                </label>
-                <input
-                  name="companyCity"
-                  type="text"
-                  className="w-30 company-input"
-                />
-              </div>
-              <div className="short-cont d-flex col-md-4 flex-column">
-                <label htmlFor="companyZipcode" className="mr-1">
-                  Zip Code
-                </label>
-                <input
-                  name="companyZipcode"
-                  type="text"
-                  className="w-30 company-input"
-                />
-              </div>
-              <div className="short-cont d-flex col-md-4 flex-column">
-                <label htmlFor="companyCountry" className="mr-1">
-                  Country
-                </label>
-                <input
-                  name="companyCountry"
-                  type="text"
-                  className="w-30 company-input"
-                />
-              </div>
+            <div className="short-input my-3">
+              <label htmlFor="companyCity" className="mr-1">
+                City
+              </label>
+              <input
+                name="companyCity"
+                type="text"
+                className="w-30 company-input"
+              />
+              <label htmlFor="companyZipcode" className="mr-1">
+                Zip Code
+              </label>
+              <input
+                name="companyZipcode"
+                type="text"
+                className="w-30 company-input"
+              />
+              <label htmlFor="companyCountry" className="mr-1">
+                Country
+              </label>
+              <input
+                name="companyCountry"
+                type="text"
+                className="w-30 company-input"
+              />
             </div>
           </div>
           <h4 className="my-5 bill">Bill To</h4>
@@ -332,12 +308,14 @@ const InvoiceSummary = () => {
               />
             </div> */}
             <div className="payment-wrap my-4">
-              <label htmlFor="invoicedate" className="mr-1">
+              <label htmlFor="invoicedate"  className="mr-1">
                 Invoice Date
               </label>
               <input
                 name="invoicedate"
-                type="text"
+                type="date"
+                value={invDatas.date}
+                onChange={(e)=>{setInvDatas({...invDatas, date: e.target.value})}}
                 className="w-40 client-input"
               />
               <label htmlFor="paymentdue" className="mr-1">
@@ -364,56 +342,41 @@ const InvoiceSummary = () => {
                     <th>Total</th>
                   </tr>
                 </thead>
-
-                {itemList.map((item, i) => {
-                  return (
-                    <tbody key={i}>
-                      <td>
-                        <input
-                          name="itemName"
-                          type="text"
-                          className="item-name"
-                          value={item.itemName}
-                          onChange={(e) => handleChange(e, i)}
-                        />
-                      </td>
-                      <td>
-                        <input
-                          name="quantity"
-                          type="number"
-                          className="item-qty"
-                          value={item.quantity}
-                          onChange={(e) => handleChange(e, i)}
-                        />
-                      </td>
-                      <td>
-                        <input
-                          name="price"
-                          type="number"
-                          className="item-price w-10"
-                          value={item.price}
-                          onChange={(e) => handleChange(e, i)}
-                        />
-                      </td>
-                      <td>Total item</td>
-                      <td>
-                        <i
-                          class="fa fa-trash"
-                          onClick={() => handleRemoveInput(i)}
-                        ></i>
-                      </td>
-                    </tbody>
-                  );
-                })}
+                <tbody>
+                  <td>
+                    <input name="item-name" type="text"
+                    value={invDatas.customer}
+                    onChange={(e)=>{setInvDatas({...invDatas, customer: e.target.value})}}    
+                    className="item-name" />
+                  </td>
+                  <td>
+                    <input name="item-qty" type="number"
+                    value={invDatas.no}
+                    onChange={(e)=>{setInvDatas({...invDatas, no: e.target.value})}}    
+                    className="item-qty" />
+                  </td>
+                  <td>
+                    <input
+                      name="item-price"
+                      type="number"
+                      value={invDatas.amount}
+                      onChange={(e)=>{setInvDatas({...invDatas, amount: e.target.value})}}
+                      className="item-price w-10"
+                    />
+                  </td>
+                  <td>Total item</td>
+                  <td><i class="fa fa-trash"></i></td>
+                </tbody>
               </Table>
               <div className="add-btn-wrap">
-                <button className="add-btn" onClick={handleAddInput}>
+                <button onClick={handleClick} className="add-btn">
                   <i class="fas fa-plus mr-2"></i>Add New Item
                 </button>
               </div>
             </div>
           </div>
         </Modal.Body>
+        {/* //The modal footer */}
         <Modal.Footer>
           <Button onClick={handleClose}>Close</Button>
         </Modal.Footer>

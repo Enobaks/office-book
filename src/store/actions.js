@@ -26,3 +26,7 @@ export const RTL_LAYOUT = 'RTL_LAYOUT';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const ACCOUNT_INITIALIZE = 'ACCOUNT_INITIALIZE';
+
+
+export const ADD_ITEM = 'ADD_ITEM'
+export const REMOVE_ITEM = 'REMOVE_ITEM'

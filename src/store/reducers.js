@@ -4,6 +4,7 @@ import accountReducer from './accountReducer';
 
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import InvoiceReducer from './invoiceReducer';
 
 const reducers = combineReducers({
     account: persistReducer(
@@ -14,7 +15,8 @@ const reducers = combineReducers({
         },
         accountReducer
     ),
-    form: formReducer
+    form: formReducer,
+    invoice: InvoiceReducer
 });
 
 export default reducers;
