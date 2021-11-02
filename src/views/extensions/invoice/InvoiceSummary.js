@@ -359,26 +359,22 @@ const InvoiceSummary = () => {
               />
             </div>
             <div className="product-section">
-              <label htmlFor="productDescription" className="mr-1">
-                Product Description
-              </label>
-              <input type="text" className="product-input mb-3 w-100" />
-              <h4 className="items mt-2">Item List</h4>
+              <h4 className="items mt-2">Product/Service List</h4>
               {items.map((item, i) => {
                 return (
                   <div key={i} className="item-table mb-3">
                     <div className="item1 my-3">
-                      <div>
+                      <div className="item1-name">
                         <input
                           name="name"
                           type="text"
                           value={item.name}
                           className="item-name "
-                          placeholder="Item name"
+                          placeholder="Product name"
                           onChange={(e) => handleChange(e, i)}
                         />
                       </div>
-                      <div>
+                      <div className="item1-qty">
                         <input
                           name="qty"
                           type="number"
@@ -388,7 +384,7 @@ const InvoiceSummary = () => {
                           onChange={(e) => handleChange(e, i)}
                         />
                       </div>
-                      <div>
+                      <div className="item1-price">
                         <input
                           name="price"
                           type="number"
@@ -398,24 +394,24 @@ const InvoiceSummary = () => {
                           onChange={(e) => handleChange(e, i)}
                         />
                       </div>
-                      <div>Total item</div>
-                      <div>
-                        <i
-                          class="fa fa-trash"
-                          onClick={() => handleRemoveInput(i)}
-                        ></i>
+                      <div className="item1-total">
+                        <p>Total item</p>
                       </div>
-                    </div>
-                    <div className="description mb-3">
-                      <div>
+                      <div className="item1-description">
                         <input
                           name="name"
                           type="text"
                           value={item.name}
-                          className="item-name w-100"
-                          placeholder="Item description"
+                          className="item-name w-90"
+                          placeholder="Product description"
                           onChange={(e) => handleChange(e, i)}
                         />
+                      </div>
+                      <div className="item1-bin">
+                        <i
+                          className="fa fa-trash bin"
+                          onClick={() => handleRemoveInput(i)}
+                        ></i>
                       </div>
                     </div>
                   </div>
