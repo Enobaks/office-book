@@ -7,7 +7,9 @@ import { ADD_ITEM } from "../../../store/actions";
 import { useSelector, useDispatch } from "react-redux";
 const InvoiceSummary = () => {
   const [show, setShow] = useState(false);
-  const [items, setItems] = useState([{ name: "qwq", qty: 12, price: 345 }]);
+  const [items, setItems] = useState([
+    { name: "", qty: "", price: "", description: "" },
+  ]);
 
   const handleChange = (e, index) => {
     const { name, value } = e.target;
@@ -18,7 +20,7 @@ const InvoiceSummary = () => {
   };
 
   const handleAddInput = () => {
-    setItems([...items, { name: "", qty: "", price: "" }]);
+    setItems([...items, { name: "", qty: "", price: "", description: "" }]);
   };
 
   const handleRemoveInput = (index) => {
@@ -361,8 +363,65 @@ const InvoiceSummary = () => {
                 Product Description
               </label>
               <input type="text" className="product-input mb-3 w-100" />
-              <h4 className="items">Item List</h4>
-              <Table>
+              <h4 className="items mt-2">Item List</h4>
+              {items.map((item, i) => {
+                return (
+                  <div key={i} className="item-table mb-3">
+                    <div className="item1 my-3">
+                      <div>
+                        <input
+                          name="name"
+                          type="text"
+                          value={item.name}
+                          className="item-name "
+                          placeholder="Item name"
+                          onChange={(e) => handleChange(e, i)}
+                        />
+                      </div>
+                      <div>
+                        <input
+                          name="qty"
+                          type="number"
+                          value={item.qty}
+                          className="item-qty"
+                          placeholder="qty"
+                          onChange={(e) => handleChange(e, i)}
+                        />
+                      </div>
+                      <div>
+                        <input
+                          name="price"
+                          type="number"
+                          value={item.price}
+                          className="item-price w-10"
+                          placeholder="amount"
+                          onChange={(e) => handleChange(e, i)}
+                        />
+                      </div>
+                      <div>Total item</div>
+                      <div>
+                        <i
+                          class="fa fa-trash"
+                          onClick={() => handleRemoveInput(i)}
+                        ></i>
+                      </div>
+                    </div>
+                    <div className="description mb-3">
+                      <div>
+                        <input
+                          name="name"
+                          type="text"
+                          value={item.name}
+                          className="item-name w-100"
+                          placeholder="Item description"
+                          onChange={(e) => handleChange(e, i)}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+              {/* <Table>
                 <thead>
                   <tr>
                     <th>Item Name</th>
@@ -371,47 +430,8 @@ const InvoiceSummary = () => {
                     <th>Total</th>
                   </tr>
                 </thead>
-                {items.map((item, i) => {
-                  return (
-                    <tbody key={i}>
-                      <td>
-                        <input
-                          name="name"
-                          type="text"
-                          value={item.name}
-                          className="item-name"
-                          onChange={(e) => handleChange(e, i)}
-                        />
-                      </td>
-                      <td>
-                        <input
-                          name="qty"
-                          type="number"
-                          value={item.qty}
-                          className="item-qty"
-                          onChange={(e) => handleChange(e, i)}
-                        />
-                      </td>
-                      <td>
-                        <input
-                          name="price"
-                          type="number"
-                          value={item.price}
-                          className="item-price w-10"
-                          onChange={(e) => handleChange(e, i)}
-                        />
-                      </td>
-                      <td>Total item</td>
-                      <td>
-                        <i
-                          class="fa fa-trash"
-                          onClick={() => handleRemoveInput(i)}
-                        ></i>
-                      </td>
-                    </tbody>
-                  );
-                })}
-              </Table>
+                
+              </Table> */}
               <div className="add-btn-wrap">
                 <button onClick={handleAddInput} className="add-btn">
                   <i class="fas fa-plus mr-2"></i>Add New Item

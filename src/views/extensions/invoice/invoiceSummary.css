@@ -43,7 +43,10 @@
 .company-input,
 .client-input,
 .product-input,
-.item-qty, .item-name, .item-price, .add-btn {
+.item-qty,
+.item-name,
+.item-price,
+.add-btn {
   height: 2.5rem;
   padding: 5px;
   border-radius: 5px;
@@ -70,17 +73,29 @@
 .item-qty {
   width: 5rem;
 }
-.add-btn-wrap{
+.add-btn-wrap {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.add-btn{
+.add-btn {
   width: 80%;
   background: rgb(141, 144, 150);
   color: #fff;
 }
-.add-btn-wrap:hover{
-  opacity: .8;
+.add-btn-wrap:hover {
+  opacity: 0.8;
+}
+.item-table {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  border-bottom: 1px solid #8d90967a;
+}
+.item1 {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
