@@ -30,10 +30,10 @@ const InvoiceSummary = () => {
 
   }
   const handleClick = ()=>{
-    const allDatas = [...invoiceData, invDatas]
+    // const allDatas = [...invoiceData, invDatas]
     dispatch({
       type:ADD_ITEM,
-      payload: allDatas
+      payload: invDatas
     })
     setInvDatas({...invDatas, ...defaultData})
     setShow(false)
@@ -162,7 +162,7 @@ const InvoiceSummary = () => {
                           <label className={`filter-status ${values.stats === 'Paid' ? 'success' :values.stats === 'Pending' ? 'pending' : 'draft'}`}>{values.stats}</label>
                         </td>
                         <td>
-                          <Link to="/invoice/invoice-basic">View</Link>
+                          <Link to={`/invoice/invoice-basic/:${values.no}`}>View</Link>
                         </td>
                       </tr>
                     ))

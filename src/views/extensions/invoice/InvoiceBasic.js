@@ -3,10 +3,16 @@ import { useReactToPrint } from 'react-to-print';
 import { Link } from 'react-router-dom';
 
 import darkLogo from '../../../assets/images/logo-dark.png';
+import { useSelector, useDispatch } from 'react-redux';
 
-const InvoiceBasic = () => {
+
+
+const InvoiceBasic = ({match}) => {
     const inputEl = useRef(null);
-
+    const id = match.params.id
+    console.log(id)
+  const {invoiceData} = useSelector(state => state.invoice)
+  console.log(invoiceData)
     const handlePrint = useReactToPrint({
         content: () => inputEl.current
     });

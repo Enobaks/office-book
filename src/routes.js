@@ -729,6 +729,11 @@ const routes = [
             },
             {
                 exact: true,
+                path: '/invoice/invoice-basic/:id',
+                component: lazy(() => import('./views/extensions/invoice/InvoiceBasic'))
+            },
+            {
+                exact: true,
                 path: '/invoice/invoice-summary',
                 component: lazy(() => import('./views/extensions/invoice/InvoiceSummary'))
             },
