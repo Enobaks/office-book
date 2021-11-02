@@ -4,40 +4,57 @@ import { Link } from "react-router-dom";
 // import ReChartSalesExpenses from "./chart/ReChartSalesExpenses";
 import "./invoiceSummary.css";
 import { ADD_ITEM } from "../../../store/actions";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
 const InvoiceSummary = () => {
   const [show, setShow] = useState(false);
-  const [item, setItem] = useState([])
+  const [items, setItems] = useState([{ name: "qwq", qty: 12, price: 345 }]);
+
+  const handleChange = (e, index) => {
+    const { name, value } = e.target;
+
+    const itemList = [...items];
+    itemList[index][name] = value;
+    setItems(itemList);
+  };
+
+  const handleAddInput = () => {
+    setItems([...items, { name: "", qty: "", price: "" }]);
+  };
+
+  const handleRemoveInput = (index) => {
+    const itemList = [...items];
+    itemList.splice(index, 1);
+    setItems(itemList);
+  };
 
   const handleClose = () => setShow(false);
   const handleShow = () => console.log(show);
-  const statsDefault = ['Paid', 'Pending', 'Draft']
-  const dispatch = useDispatch()
-  const {invoiceData} = useSelector(state => state.invoice)
+  const statsDefault = ["Paid", "Pending", "Draft"];
+  const dispatch = useDispatch();
+  const { invoiceData } = useSelector((state) => state.invoice);
   const [invDatas, setInvDatas] = useState({
-      date: "",
-      no: 0,
-      customer: '',
-      amount:0,
-      stats: statsDefault[Math.floor(Math.random() * statsDefault.length)]
-  })
-  const defaultData= {
     date: "",
     no: 0,
-    customer: '',
-    amount:0,
-    stats: statsDefault[Math.floor(Math.random() * statsDefault.length)]
-
-  }
-  const handleClick = ()=>{
-    const allDatas = [...invoiceData, invDatas]
-    dispatch({
-      type:ADD_ITEM,
-      payload: allDatas
-    })
-    setInvDatas({...invDatas, ...defaultData})
-    setShow(false)
-  }
+    customer: "",
+    amount: 0,
+    stats: statsDefault[Math.floor(Math.random() * statsDefault.length)],
+  });
+  const defaultData = {
+    date: "",
+    no: 0,
+    customer: "",
+    amount: 0,
+    stats: statsDefault[Math.floor(Math.random() * statsDefault.length)],
+  };
+  const handleClick = () => {
+    // const allDatas = [...invoiceData, invDatas]
+    // dispatch({
+    //   type:ADD_ITEM,
+    //   payload: allDatas
+    // })
+    // setInvDatas({...invDatas, ...defaultData})
+    // setShow(false)
+  };
   return (
     <React.Fragment>
       <Row>
@@ -150,23 +167,33 @@ const InvoiceSummary = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {(invoiceData && invoiceData.length > 1) &&
-                    invoiceData.map((values, index)=>(
+                  {invoiceData &&
+                    invoiceData.length > 1 &&
+                    invoiceData.map((values, index) => (
                       <tr>
                         <th scope="row">{index + 1}</th>
                         <td>{values.date}</td>
                         <td>{values.no}</td>
-                        <td>{values.customer + (index+1)}</td>
+                        <td>{values.customer + (index + 1)}</td>
                         <td>{`$ ${values.amount}`}</td>
                         <td>
-                          <label className={`filter-status ${values.stats === 'Paid' ? 'success' :values.stats === 'Pending' ? 'pending' : 'draft'}`}>{values.stats}</label>
+                          <label
+                            className={`filter-status ${
+                              values.stats === "Paid"
+                                ? "success"
+                                : values.stats === "Pending"
+                                ? "pending"
+                                : "draft"
+                            }`}
+                          >
+                            {values.stats}
+                          </label>
                         </td>
                         <td>
                           <Link to="/invoice/invoice-basic">View</Link>
                         </td>
                       </tr>
-                    ))
-                  }
+                    ))}
                 </tbody>
               </Table>
             </Card.Body>
@@ -308,14 +335,16 @@ const InvoiceSummary = () => {
               />
             </div> */}
             <div className="payment-wrap my-4">
-              <label htmlFor="invoicedate"  className="mr-1">
+              <label htmlFor="invoicedate" className="mr-1">
                 Invoice Date
               </label>
               <input
                 name="invoicedate"
                 type="date"
                 value={invDatas.date}
-                onChange={(e)=>{setInvDatas({...invDatas, date: e.target.value})}}
+                onChange={(e) => {
+                  setInvDatas({ ...invDatas, date: e.target.value });
+                }}
                 className="w-40 client-input"
               />
               <label htmlFor="paymentdue" className="mr-1">
@@ -342,34 +371,49 @@ const InvoiceSummary = () => {
                     <th>Total</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <td>
-                    <input name="item-name" type="text"
-                    value={invDatas.customer}
-                    onChange={(e)=>{setInvDatas({...invDatas, customer: e.target.value})}}    
-                    className="item-name" />
-                  </td>
-                  <td>
-                    <input name="item-qty" type="number"
-                    value={invDatas.no}
-                    onChange={(e)=>{setInvDatas({...invDatas, no: e.target.value})}}    
-                    className="item-qty" />
-                  </td>
-                  <td>
-                    <input
-                      name="item-price"
-                      type="number"
-                      value={invDatas.amount}
-                      onChange={(e)=>{setInvDatas({...invDatas, amount: e.target.value})}}
-                      className="item-price w-10"
-                    />
-                  </td>
-                  <td>Total item</td>
-                  <td><i class="fa fa-trash"></i></td>
-                </tbody>
+                {items.map((item, i) => {
+                  return (
+                    <tbody key={i}>
+                      <td>
+                        <input
+                          name="name"
+                          type="text"
+                          value={item.name}
+                          className="item-name"
+                          onChange={(e) => handleChange(e, i)}
+                        />
+                      </td>
+                      <td>
+                        <input
+                          name="qty"
+                          type="number"
+                          value={item.qty}
+                          className="item-qty"
+                          onChange={(e) => handleChange(e, i)}
+                        />
+                      </td>
+                      <td>
+                        <input
+                          name="price"
+                          type="number"
+                          value={item.price}
+                          className="item-price w-10"
+                          onChange={(e) => handleChange(e, i)}
+                        />
+                      </td>
+                      <td>Total item</td>
+                      <td>
+                        <i
+                          class="fa fa-trash"
+                          onClick={() => handleRemoveInput(i)}
+                        ></i>
+                      </td>
+                    </tbody>
+                  );
+                })}
               </Table>
               <div className="add-btn-wrap">
-                <button onClick={handleClick} className="add-btn">
+                <button onClick={handleAddInput} className="add-btn">
                   <i class="fas fa-plus mr-2"></i>Add New Item
                 </button>
               </div>
