@@ -166,7 +166,7 @@ const NavRight = () => {
                 <img src={avatar1} className="img-radius" alt="User Profile" />
                 <span>John Doe</span>
                 <Link
-                  to="#"
+                  to="/auth/signin"
                   className="dud-logout"
                   title="Logout"
                   onClick={handleLogout}
@@ -186,7 +186,7 @@ const NavRight = () => {
                   </Link>
                 </ListGroup.Item> */}
                 <ListGroup.Item as="li" bsPrefix=" ">
-                  <Link to="#" className="dropdown-item">
+                  <Link to="/app/dashboard/profile" className="dropdown-item">
                     <i className="feather icon-user" /> Profile
                   </Link>
                 </ListGroup.Item>

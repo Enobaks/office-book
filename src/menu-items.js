@@ -60,9 +60,9 @@ const menuItems = {
           title: "Profile",
           type: "item",
           icon: "feather icon-user",
-          url: "/app/dashboard/e-commerce",
+          url: "/app/dashboard/profile",
           target: true,
-          breadcrumbs: false,
+          breadcrumbs: true,
         },
         // {
         //   id: "layout",
