@@ -1,3 +1,8 @@
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .status {
   background-color: #f4f7fa;
   border: 1px solid #c4c4c4;
@@ -143,6 +148,8 @@
   width: 100%;
 }
 @media (max-width: 900px) {
+  .filter-container {
+  }
   .company-input,
   .client-input {
     width: 100% !important;
@@ -180,5 +187,8 @@
     grid-template-rows: auto;
     grid-template-columns: auto;
     gap: 20px;
+  }
+  .status-section {
+    display: none !important;
   }
 }
