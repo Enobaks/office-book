@@ -66,17 +66,36 @@ const InvoiceSummary = () => {
     setFilteredInvoice(filteredDatas);
   };
 
-  const searchInvoice = (e) => {
-    const searchFilter = invoiceData.filter((data) => {
-      for (let value in data) {
-        if (e.target.value.trim().length <= 0) return [data];
-        console.log(data[value]);
-        // if (data[value].includes(e.target.value)) {
-        // }
-      }
+  // const searchInvoice = (e) => {
+  //   const searchFilter = invoiceData.filter((data) => {
+  //     for (let value in data) {
+  //       if (e.target.value.trim().length <= 0) return [data];
+  //       console.log(data[value]);
+  //       if (data[value].includes(e.target.value)) {
+  //       }
+  //     }
+  //   });
+  //   setFilteredInvoice(searchFilter);
+  //   console.log(e.target.value);
+  // };
+
+  const [searchText, setSearchText] = useState("");
+  const searchInvoice = (value) => {
+    setSearchText(value);
+    filterData(value);
+  };
+
+  // filter records by search text
+  const filterData = (value) => {
+    const lowercasedValue = value.toLowerCase().trim();
+    if (lowercasedValue === "") setFilteredInvoice(invoiceData);
+    const filteredData = invoiceData.filter((item) => {
+      return Object.keys(item).some((key) => {
+        return item[key].toString().toLowerCase().includes(lowercasedValue);
+      });
     });
-    // setFilteredInvoice(searchFilter);
-    // console.log(e.target.value);
+
+    setFilteredInvoice(filteredData);
   };
 
   return (
@@ -100,7 +119,7 @@ const InvoiceSummary = () => {
               <input
                 type="text"
                 className="search w-10 mr-2"
-                onChange={searchInvoice}
+                onChange={(e) => searchInvoice(e.target.value)}
               />
             </div>
             <div className="new-invoice">
