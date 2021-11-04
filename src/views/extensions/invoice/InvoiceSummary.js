@@ -48,6 +48,7 @@ const InvoiceSummary = () => {
     amount: 0,
     stats: statsDefault[Math.floor(Math.random() * statsDefault.length)],
   };
+  const [filteredInvoice, setFilteredInvoice] = useState(null);
   const handleClick = () => {
     // const allDatas = [...invoiceData, invDatas]
     // dispatch({
@@ -57,85 +58,69 @@ const InvoiceSummary = () => {
     // setInvDatas({...invDatas, ...defaultData})
     // setShow(false)
   };
+
+  const filterInvoice = (e) => {
+    const filteredDatas = invoiceData.filter(
+      (data) => data.stats === e.target.value
+    );
+    setFilteredInvoice(filteredDatas);
+  };
+
+  // const searchInvoice = (e) => {
+  //   const searchFilter = invoiceData.filter((data) => {
+  //     for (let value in data) {
+  //       if (e.target.value.trim().length <= 0) return [data];
+  //       console.log(data[value]);
+  //       if (data[value].includes(e.target.value)) {
+  //       }
+  //     }
+  //   });
+  //   setFilteredInvoice(searchFilter);
+  //   console.log(e.target.value);
+  // };
+
+  const [searchText, setSearchText] = useState("");
+  const searchInvoice = (value) => {
+    setSearchText(value);
+    filterData(value);
+  };
+
+  // filter records by search text
+  const filterData = (value) => {
+    const lowercasedValue = value.toLowerCase().trim();
+    if (lowercasedValue === "") setFilteredInvoice(invoiceData);
+    const filteredData = invoiceData.filter((item) => {
+      return Object.keys(item).some((key) => {
+        return item[key].toString().toLowerCase().includes(lowercasedValue);
+      });
+    });
+
+    setFilteredInvoice(filteredData);
+  };
+
   return (
     <React.Fragment>
       <Row>
-        {/* <Col md={6}>
-                    <Card>
-                        <Card.Header>
-                            <Card.Title as="h5">Sales and Expenses</Card.Title>
-                        </Card.Header>
-                        <Card.Body>
-                            <ReChartSalesExpenses />
-                        </Card.Body>
-                    </Card>
-                </Col> */}
-        {/* <Col md={6}>
-                    <Card>
-                        <Card.Header>
-                            <Card.Title as="h5">Sales, Receipt and Dues</Card.Title>
-                        </Card.Header>
-                        <Card.Body>
-                            <Table responsive className="mb-0">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Sales</th>
-                                        <th>Receipt</th>
-                                        <th>Dues</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">Today</th>
-                                        <td>$250.00</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">This Week</th>
-                                        <td>$380.00</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">This Month</th>
-                                        <td>$450.00</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">This Year</th>
-                                        <td>$600.00</td>
-                                        <td>the Bird</td>
-                                        <td>@facebook</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Total</th>
-                                        <td>$600.00</td>
-                                        <td>the Bird</td>
-                                        <td>@google</td>
-                                    </tr>
-                                </tbody>
-                            </Table>
-                        </Card.Body>
-                    </Card>
-                </Col> */}
         <Col md={12}>
-          <div className="wr d-flex justify-content-between align-items-center mb-2">
+          <div className="filter-container mb-2">
             <div className="status-section">
               <label htmlfor="status">Filter by status</label>
-              <select name="status" className="status">
-                <option value="pending">Pending</option>
-                <option value="draft">Draft</option>
-                <option value="paid">Paid</option>
+              <select name="status" onChange={filterInvoice} className="status">
+                <option value="">All</option>
+                <option value="Pending">Pending</option>
+                <option value="Draft">Draft</option>
+                <option value="Paid">Paid</option>
               </select>
             </div>
             <div className="search-section d-flex align-items-center">
               <label for="search" className="mr-1 mb-0">
                 Search
               </label>
-              <input type="text" className="search w-10 mr-2" />
+              <input
+                type="text"
+                className="search w-10 mr-2"
+                onChange={(e) => searchInvoice(e.target.value)}
+              />
             </div>
             <div className="new-invoice">
               <button
@@ -170,32 +155,59 @@ const InvoiceSummary = () => {
                 </thead>
                 <tbody>
                   {invoiceData &&
-                    invoiceData.length > 1 &&
-                    invoiceData.map((values, index) => (
-                      <tr>
-                        <th scope="row">{index + 1}</th>
-                        <td>{values.date}</td>
-                        <td>{values.no}</td>
-                        <td>{values.customer + (index + 1)}</td>
-                        <td>{`$ ${values.amount}`}</td>
-                        <td>
-                          <label
-                            className={`filter-status ${
-                              values.stats === "Paid"
-                                ? "success"
-                                : values.stats === "Pending"
-                                ? "pending"
-                                : "draft"
-                            }`}// 5235287922803193
-                          >
-                            {values.stats}
-                          </label>
-                        </td>
-                        <td>
-                          <Link to={`/invoice/invoice-basic/:${values.no}`}>View</Link>
-                        </td>
-                      </tr>
-                    ))}
+                  filteredInvoice &&
+                  invoiceData.length > 0 &&
+                  filteredInvoice.length > 0
+                    ? filteredInvoice.map((values, index) => (
+                        <tr>
+                          <th scope="row">{index + 1}</th>
+                          <td>{values.date}</td>
+                          <td>{values.no}</td>
+                          <td>{values.customer + (index + 1)}</td>
+                          <td>{`$ ${values.amount}`}</td>
+                          <td>
+                            <label
+                              className={`filter-status ${
+                                values.stats === "Paid"
+                                  ? "success"
+                                  : values.stats === "Pending"
+                                  ? "pending"
+                                  : "draft"
+                              }`}
+                            >
+                              {values.stats}
+                            </label>
+                          </td>
+                          <td>
+                            <Link to="/invoice/invoice-basic">View</Link>
+                          </td>
+                        </tr>
+                      ))
+                    : invoiceData.map((values, index) => (
+                        <tr>
+                          <th scope="row">{index + 1}</th>
+                          <td>{values.date}</td>
+                          <td>{values.no}</td>
+                          <td>{values.customer + (index + 1)}</td>
+                          <td>{`$ ${values.amount}`}</td>
+                          <td>
+                            <label
+                              className={`filter-status ${
+                                values.stats === "Paid"
+                                  ? "success"
+                                  : values.stats === "Pending"
+                                  ? "pending"
+                                  : "draft"
+                              }`}
+                            >
+                              {values.stats}
+                            </label>
+                          </td>
+                          <td>
+                            <Link to="/invoice/invoice-basic">View</Link>
+                          </td>
+                        </tr>
+                      ))}
                 </tbody>
               </Table>
             </Card.Body>
@@ -359,26 +371,22 @@ const InvoiceSummary = () => {
               />
             </div>
             <div className="product-section">
-              <label htmlFor="productDescription" className="mr-1">
-                Product Description
-              </label>
-              <input type="text" className="product-input mb-3 w-100" />
-              <h4 className="items mt-2">Item List</h4>
+              <h4 className="items mt-2">Product/Service List</h4>
               {items.map((item, i) => {
                 return (
                   <div key={i} className="item-table mb-3">
                     <div className="item1 my-3">
-                      <div>
+                      <div className="item1-name">
                         <input
                           name="name"
                           type="text"
                           value={item.name}
                           className="item-name "
-                          placeholder="Item name"
+                          placeholder="Product name"
                           onChange={(e) => handleChange(e, i)}
                         />
                       </div>
-                      <div>
+                      <div className="item1-qty">
                         <input
                           name="qty"
                           type="number"
@@ -388,7 +396,7 @@ const InvoiceSummary = () => {
                           onChange={(e) => handleChange(e, i)}
                         />
                       </div>
-                      <div>
+                      <div className="item1-price">
                         <input
                           name="price"
                           type="number"
@@ -398,24 +406,24 @@ const InvoiceSummary = () => {
                           onChange={(e) => handleChange(e, i)}
                         />
                       </div>
-                      <div>Total item</div>
-                      <div>
-                        <i
-                          class="fa fa-trash"
-                          onClick={() => handleRemoveInput(i)}
-                        ></i>
+                      <div className="item1-total">
+                        <p>Total item</p>
                       </div>
-                    </div>
-                    <div className="description mb-3">
-                      <div>
+                      <div className="item1-description">
                         <input
                           name="name"
                           type="text"
                           value={item.name}
-                          className="item-name w-100"
-                          placeholder="Item description"
+                          className="item-name w-90"
+                          placeholder="Product description"
                           onChange={(e) => handleChange(e, i)}
                         />
+                      </div>
+                      <div className="item1-bin">
+                        <i
+                          className="fa fa-trash bin"
+                          onClick={() => handleRemoveInput(i)}
+                        ></i>
                       </div>
                     </div>
                   </div>

@@ -1,4 +1,4 @@
-import {ADD_ITEM} from './actions'
+import { ADD_ITEM } from "./actions";
 
 const initState = {
     invoiceData: [
@@ -153,4 +153,4 @@ const InvoiceReducer = (state= initState, action)=>{
     }
 }
 
-export default InvoiceReducer
+export default InvoiceReducer;

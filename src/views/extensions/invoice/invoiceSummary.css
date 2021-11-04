@@ -1,3 +1,8 @@
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .status {
   background-color: #f4f7fa;
   border: 1px solid #c4c4c4;
@@ -89,13 +94,101 @@
 }
 .item-table {
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
   border-bottom: 1px solid #8d90967a;
 }
+
 .item1 {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
   width: 100%;
+  height: auto;
+  grid-template-areas:
+    "name qty price total"
+    "description description description bin";
+  grid-template-rows: auto;
+  grid-template-columns: 40% 10% 1fr 15%;
+  gap: 20px;
+}
+
+.item1-name {
+  grid-area: name;
+  background-color: rgb(245, 243, 243);
+}
+.item1-qty {
+  grid-area: qty;
+}
+.item1-price {
+  grid-area: price;
+}
+.item1-total {
+  grid-area: total;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.item1-total p {
+  margin: 0;
+}
+.item1-description {
+  grid-area: description;
+}
+.item1-bin {
+  grid-area: bin;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.bin {
+  font-size: 1.5rem;
+}
+.item-name,
+.item-price,
+.item-qty,
+.item-total,
+.item1-description {
+  width: 100%;
+}
+@media (max-width: 900px) {
+  .filter-container {
+  }
+  .company-input,
+  .client-input {
+    width: 100% !important;
+  }
+  .short-input label:not(:first-child),
+  .payment-wrap label:not(:first-child) {
+    margin-left: 0;
+  }
+  .payment-wrap {
+    margin-top: 0 !important;
+  }
+  .short-input {
+    margin-top: 0 !important;
+  }
+  .payment-wrap .client-input:not(:last-child) {
+    margin-bottom: 1rem !important;
+  }
+  .item1 {
+    flex-direction: column;
+  }
+  .item-name,
+  .item-qty,
+  .item-price {
+    width: 100% !important;
+  }
+  .item1 {
+    display: grid;
+    width: 100%;
+    height: auto;
+    grid-template-areas:
+      "name name name"
+      "description description description"
+      "qty price total"
+      ". . bin";
+    grid-template-rows: auto;
+    grid-template-columns: auto;
+    gap: 20px;
+  }
+  .status-section {
+    display: none !important;
+  }
 }

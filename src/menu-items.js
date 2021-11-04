@@ -1,66 +1,75 @@
 const menuItems = {
-    items: [
+  items: [
+    {
+      id: "navigation",
+      title: "Navigation",
+      type: "group",
+      icon: "icon-navigation",
+      children: [
         {
-            id: 'navigation',
-            title: 'Navigation',
-            type: 'group',
-            icon: 'icon-navigation',
-            children: [
-                {
-                    id: 'dashboard',
-                    title: 'Dashboard',
-                    type: 'item',
-                    icon: 'feather icon-home',
-                    url: '/app/dashboard/default'
-                    // children: [
-                    //     {
-                    //         id: 'default',
-                    //         title: 'Default',
-                    //         type: 'item',
-                    //         url: '/app/dashboard/default'
-                    //     },
-                    //     {
-                    //         id: 'e-commerce',
-                    //         title: 'Ecommerce',
-                    //         type: 'item',
-                    //         url: '/app/dashboard/e-commerce'
-                    //     },
-                    //     {
-                    //         id: 'crm',
-                    //         title: 'CRM',
-                    //         type: 'item',
-                    //         url: '/app/dashboard/crm'
-                    //     },
-                    //     {
-                    //         id: 'analytics',
-                    //         title: 'Analytics',
-                    //         type: 'item',
-                    //         url: '/app/dashboard/analytics'
-                    //     },
-                    //     {
-                    //         id: 'crypto',
-                    //         title: 'Crypto',
-                    //         type: 'item',
-                    //         url: '/app/dashboard/crypto',
-                    //         badge: {
-                    //             title: 'NEW',
-                    //             type: 'label-danger'
-                    //         }
-                    //     },
-                    //     {
-                    //         id: 'project',
-                    //         title: 'Project',
-                    //         type: 'item',
-                    //         url: '/app/dashboard/project'
-                    //     }
-                    // ]
-                },
-        //         {
-        //             id: 'layout',
-        //             title: 'Page Layouts',
-        //             type: 'collapse',
-        //             icon: 'feather icon-layout',
-        //             children: [
+          id: "dashboard",
+          title: "Dashboard",
+          type: "item",
+          icon: "feather icon-home",
+          url: "/app/dashboard/default",
+          children: [
+            //     {
+            //         id: 'default',
+            //         title: 'Default',
+            //         type: 'item',
+            //         url: '/app/dashboard/default'
+            //     },
+            // {
+            //   id: "e-commerce",
+            //   title: "Ecommerce",
+            //   type: "item",
+            //   url: "/app/dashboard/e-commerce",
+            // },
+            //     {
+            //         id: 'crm',
+            //         title: 'CRM',
+            //         type: 'item',
+            //         url: '/app/dashboard/crm'
+            //     },
+            //     {
+            //         id: 'analytics',
+            //         title: 'Analytics',
+            //         type: 'item',
+            //         url: '/app/dashboard/analytics'
+            //     },
+            //     {
+            //         id: 'crypto',
+            //         title: 'Crypto',
+            //         type: 'item',
+            //         url: '/app/dashboard/crypto',
+            //         badge: {
+            //             title: 'NEW',
+            //             type: 'label-danger'
+            //         }
+            //     },
+            //     {
+            //         id: 'project',
+            //         title: 'Project',
+            //         type: 'item',
+            //         url: '/app/dashboard/project'
+            //     }
+          ],
+        },
+        {
+          id: "e-commerce",
+          title: "Profile",
+          type: "item",
+          icon: "feather icon-user",
+          url: "/app/dashboard/profile",
+          target: true,
+          breadcrumbs: true,
+        },
+        // {
+        //   id: "layout",
+        //   title: "Page Layouts",
+        //   type: "collapse",
+        //   icon: "feather icon-layout",
+        //   children: [
         //                 {
         //                     id: 'vertical',
         //                     title: 'Vertical',
@@ -94,15 +103,15 @@ const menuItems = {
         //                             url: '/layout/vertical/collapse-menu',
         //                             target: true
         //                         },
-        //                         {
-        //                             id: 'v-rtl',
-        //                             title: 'Vertical RTL',
-        //                             type: 'item',
-        //                             url: '/layout/vertical/v-rtl',
-        //                             target: true
-        //                         }
-        //                     ]
-        //                 },
+        //     {
+        //       id: "v-rtl",
+        //       title: "Vertical RTL",
+        //       type: "item",
+        //       url: "/layout/vertical/v-rtl",
+        //       target: true,
+        //     },
+        //   ],
+        //   },
         //                 {
         //                     id: 'horizontal',
         //                     title: 'Horizontal',
@@ -787,14 +796,15 @@ const menuItems = {
         //                     target: true,
         //                     breadcrumbs: false
         //                 },
-        //                 {
-        //                     id: 'profile-settings',
-        //                     title: 'Profile Settings',
-        //                     type: 'item',
-        //                     url: '/auth/profile-settings',
-        //                     target: true,
-        //                     breadcrumbs: false
-        //                 },
+        // {
+        //   id: "profile-settings",
+        //   title: "Profile Settings",
+        //   type: "item",
+        //   icon: "feather icon-user",
+        //   url: "/auth/profile-settings",
+        //   target: true,
+        //   breadcrumbs: false,
+        // },
         //                 {
         //                     id: 'map-form',
         //                     title: 'Map Form',
@@ -996,32 +1006,32 @@ const menuItems = {
         //                 }
         //             ]
         //         },
-                {
-                    id: 'invoice',
-                    title: 'Invoice',
-                    type: 'collapse',
-                    icon: 'feather icon-file-minus',
-                    children: [
-                        {
-                            id: 'invoice-basic',
-                            title: 'Invoice Basic',
-                            type: 'item',
-                            url: '/invoice/invoice-basic'
-                        },
-                        {
-                            id: 'invoice-summary',
-                            title: 'Invoice Summary',
-                            type: 'item',
-                            url: '/invoice/invoice-summary'
-                        },
-                        {
-                            id: 'invoice-list',
-                            title: 'Invoice List',
-                            type: 'item',
-                            url: '/invoice/invoice-list'
-                        }
-                    ]
-                }
+        {
+          id: "invoice",
+          title: "Invoice",
+          type: "collapse",
+          icon: "feather icon-file-minus",
+          children: [
+            {
+              id: "invoice-basic",
+              title: "Invoice Basic",
+              type: "item",
+              url: "/invoice/invoice-basic",
+            },
+            {
+              id: "invoice-summary",
+              title: "Invoice Summary",
+              type: "item",
+              url: "/invoice/invoice-summary",
+            },
+            {
+              id: "invoice-list",
+              title: "Invoice List",
+              type: "item",
+              url: "/invoice/invoice-list",
+            },
+          ],
+        },
         //         {
         //             id: 'full-calendar',
         //             title: 'Full Calendar',
@@ -1126,9 +1136,9 @@ const menuItems = {
         //             target: true,
         //             external: true
         //         }
-            ]
-        }
-    ]
+      ],
+    },
+  ],
 };
 
 export default menuItems;

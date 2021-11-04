@@ -1,16 +1,26 @@
-@import '~bootstrap/dist/css/bootstrap';
+@import "~bootstrap/dist/css/bootstrap";
 
-@import 'animate';
-@import 'style';
+@import "animate";
+@import "style";
 
-.signup-btn{
-    background-color: #04a9f5;
-    color: #fff;
+.signup-btn {
+  background-color: #04a9f5;
+  color: #fff;
+  border: 2px solid #04a9f5;
+
+  &:hover {
+    background-color: #fff;
+    color: #04a9f5;
+    border: 2px solid #04a9f5 f5;
+  }
+}
+.outline-btn {
+  background-color: #fff;
+  color: #04a9f5;
+  border: 2px solid #04a9f5;
+  &:hover {
+    background-color: #fff;
+    color: #04a9f5;
     border: 2px solid #04a9f5;
-
-    &:hover {
-        background-color: #fff;
-        color: #04a9f5                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ;
-        border:2px solid #04a9f5                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    f5;
-    }
+  }
 }

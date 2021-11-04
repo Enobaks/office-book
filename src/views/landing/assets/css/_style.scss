@@ -171,11 +171,24 @@ h1 {
 .navbar .dropdown-menu {
   border-top: 3px solid #999;
 }
-
+.rain {
+  display: block;
+}
+.raining {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.35s ease;
+}
+.dry {
+  display: none;
+}
 @media (min-width: 992px) {
   .navbar-expand-lg .navbar-nav .nav-link {
     padding-right: 0.8rem;
     padding-left: 0.8rem;
+  }
+  .hamburger {
+    display: none;
   }
 }
 
@@ -189,6 +202,10 @@ h1 {
 }
 
 @media screen and (max-width: 992px) {
+  .hamburger {
+    display: block;
+  }
+
   .navbar .dropdown-menu a {
     text-align: center;
   }
@@ -1107,6 +1124,10 @@ body {
 
 /* -------- Testimonials Section -------- */
 /* ------ Download Section Styling------------ */
+.hide {
+  z-index: 0;
+  position: relative;
+}
 .download {
   width: 100%;
   height: 100%;
