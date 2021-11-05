@@ -242,7 +242,7 @@ const InvoiceSummary = () => {
               <input
                 name="companyEmail"
                 type="text"
-                className="w-30 company-input"
+                className="email company-input"
               />
               <label htmlFor="companyNo" className="mr-1">
                 Phone No
@@ -250,17 +250,17 @@ const InvoiceSummary = () => {
               <input
                 name="companyNo"
                 type="text"
-                className="w-30 company-input"
-              />
-              <label htmlFor="companyWebsite" className="mr-1">
-                Website
-              </label>
-              <input
-                name="companyWebsite"
-                type="text"
-                className="w-30 company-input"
+                className="phone company-input"
               />
             </div>
+            <label htmlFor="companyWebsite" className="mr-1">
+              Website
+            </label>
+            <input
+              name="companyWebsite"
+              type="text"
+              className="website company-input mb-3"
+            />
             <label htmlFor="companyAddress">Address</label>
             <input
               name="companyAddress"
@@ -274,7 +274,7 @@ const InvoiceSummary = () => {
               <input
                 name="companyCity"
                 type="text"
-                className="w-30 company-input"
+                className="city company-input"
               />
               <label htmlFor="companyZipcode" className="mr-1">
                 Zip Code
@@ -282,17 +282,17 @@ const InvoiceSummary = () => {
               <input
                 name="companyZipcode"
                 type="text"
-                className="w-30 company-input"
-              />
-              <label htmlFor="companyCountry" className="mr-1">
-                Country
-              </label>
-              <input
-                name="companyCountry"
-                type="text"
-                className="w-30 company-input"
+                className="zipcode company-input"
               />
             </div>
+            <label htmlFor="companyCountry" className="mr-1">
+              Country
+            </label>
+            <input
+              name="companyCountry"
+              type="text"
+              className="w-100 company-input"
+            />
           </div>
           <h4 className="my-5 bill">Bill To</h4>
           <div className="client">
@@ -322,32 +322,7 @@ const InvoiceSummary = () => {
               type="text"
               className="w-100 client-input mb-3"
             />
-            {/* <div className="short-input my-3">
-              <label htmlFor="clientCity" className="mr-1">
-                City
-              </label>
-              <input
-                name="clientCity"
-                type="text"
-                className="w-30 client-input"
-              />
-              <label htmlFor="clientZipcode" className="mr-1">
-                Zip Code
-              </label>
-              <input
-                name="clientZipcode"
-                type="text"
-                className="w-30 client-input"
-              />
-              <label htmlFor="clientCountry" className="mr-1">
-                Country
-              </label>
-              <input
-                name="clientCountry"
-                type="text"
-                className="w-30 client-input"
-              />
-            </div> */}
+
             <div className="payment-wrap my-4">
               <label htmlFor="invoicedate" className="mr-1">
                 Invoice Date
