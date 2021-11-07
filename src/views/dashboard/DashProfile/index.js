@@ -10,8 +10,6 @@ const DashProfile = () => {
 
   const handleEdit = () => {
     setEdit(!edit);
-    setIsUploaded(false);
-    setImage(null);
   };
 
   const handleFileChange = (e) => {
@@ -119,9 +117,11 @@ const DashProfile = () => {
                 <img
                   id="uploaded-image"
                   src={image}
-                  draggable={false}
                   alt="uploaded-img"
-                  
+                  onClick={() => {
+                    setIsUploaded(false);
+                    setImage(null);
+                  }}
                 />
               )}
             </div>
