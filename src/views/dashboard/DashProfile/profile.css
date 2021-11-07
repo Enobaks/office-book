@@ -11,6 +11,7 @@
 }
 .company-input:disabled {
   background: rgb(240, 240, 240);
+  pointer-events: none;
 }
 .company-input:disabled::placeholder {
   color: rgb(0, 0, 0);
@@ -151,13 +152,21 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+  /* pointer-events: none; */
+
 }
-.upload-wrap input {
+.upload-wrap input, #img-upload {
   display: none;
 }
+#uploaded-image{
+  width: 200px ;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 20px;
+}
 @media (max-width: 900px) {
-  .filter-container {
-  }
+  
   .company-input,
   .client-input {
     width: 100% !important;
