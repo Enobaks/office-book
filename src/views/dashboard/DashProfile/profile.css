@@ -143,6 +143,18 @@
   margin-bottom: 0;
   font-size: 16px;
 }
+.upload-wrap label {
+  width: 10rem;
+  height: 10rem;
+  border: 1px dashed rgb(116, 116, 116);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.upload-wrap input {
+  display: none;
+}
 @media (max-width: 900px) {
   .filter-container {
   }

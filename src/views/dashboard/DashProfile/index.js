@@ -5,6 +5,7 @@ import "./profile.css";
 
 const DashProfile = () => {
   const [edit, setEdit] = useState(true);
+
   const handleEdit = () => {
     setEdit(!edit);
   };
@@ -87,14 +88,21 @@ const DashProfile = () => {
           </div>
         </Col>
         <Col md={6} xl={4} className="profile-cont">
-          <div className="logo">Upload Image</div>
+          <div className="logo">
+            <div className="upload-wrap">
+              <label htmlFor="img-upload">Upload company logo</label>
+              <input type="file" id="img-upload" accept=".jpg,.jpeg,.png" />
+            </div>
+          </div>
           {edit ? (
             <div className="edit-wrap" onClick={handleEdit}>
               <p>Edit</p>
               <Edit3 />
             </div>
           ) : (
-            <button className="btn btn-success save" onClick={handleEdit}>Save</button>
+            <button className="btn btn-success save" onClick={handleEdit}>
+              Save
+            </button>
           )}
         </Col>
       </Row>
