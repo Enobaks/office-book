@@ -49,8 +49,16 @@ const initState = {
             ]
         },
         {
-            date: "09-05-2021",
+            date: "06-05-2021",
             no: 10983,
+            alt_no: function (){
+              return this.orders.map(data=>{
+                let values = 0
+                values = values += data.amount *data.quantity
+                console.log(values)
+                return values
+              })
+            },
             customer: 'Customer',
             amount: 345,
             stats: 'Pending',

@@ -179,7 +179,7 @@ const InvoiceSummary = () => {
                             </label>
                           </td>
                           <td>
-                            <Link to="/invoice/invoice-basic">View</Link>
+                            <Link to="/invoice/invoice-basic/12345">View</Link>
                           </td>
                         </tr>
                       ))
@@ -204,7 +204,7 @@ const InvoiceSummary = () => {
                             </label>
                           </td>
                           <td>
-                            <Link to="/invoice/invoice-basic">View</Link>
+                            <Link to="/invoice/invoice-basic/10983">View</Link>
                           </td>
                         </tr>
                       ))}
