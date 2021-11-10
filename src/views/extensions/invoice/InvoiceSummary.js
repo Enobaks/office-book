@@ -189,7 +189,7 @@ const InvoiceSummary = () => {
                           <td>{values.date}</td>
                           <td>{values.no}</td>
                           <td>{values.customer + (index + 1)}</td>
-                          <td>{`$ ${values.amount}`}</td>
+                          <td>{`$ ${values.alt_no()}`}</td>
                           <td>
                             <label
                               className={`filter-status ${
@@ -204,7 +204,7 @@ const InvoiceSummary = () => {
                             </label>
                           </td>
                           <td>
-                            <Link to="/invoice/invoice-basic/10983">View</Link>
+                            <Link to={`/invoice/invoice-basic/${values.no}`}>View</Link>
                           </td>
                         </tr>
                       ))}

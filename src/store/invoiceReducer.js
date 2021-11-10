@@ -1,12 +1,15 @@
 import { ADD_ITEM } from "./actions";
 
+function alt_no(){
+  return this.orders.map(data=>data.amount *data.quantity).reduce((a, b)=> a+b)
+}
 const initState = {
     invoiceData: [
         {
             date: "10-7-2021",
-            no: 42526,
+            no: 422326,
             customer: 'Customer',
-            amount: 78,
+            alt_no,
             stats: 'Paid',
             invoice_no: 9876543456789,
             company_info:{
@@ -51,16 +54,8 @@ const initState = {
         {
             date: "06-05-2021",
             no: 10983,
-            alt_no: function (){
-              return this.orders.map(data=>{
-                let values = 0
-                values = values += data.amount *data.quantity
-                console.log(values)
-                return values
-              })
-            },
+            alt_no,
             customer: 'Customer',
-            amount: 345,
             stats: 'Pending',
             invoice_no: 346798734566,
             company_info:{
@@ -79,26 +74,26 @@ const initState = {
                 {
                     order_title: 'Logo Design',
                     description: 'lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt',
-                    quantity: 5,
-                    amount: 200,
+                    quantity: 4,
+                    amount: 80,
+                },
+                {
+                    order_title: 'Logo Design',
+                    description: 'lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt',
+                    quantity: 7,
+                    amount: 150,
                 },
                 {
                     order_title: 'Logo Design',
                     description: 'lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt',
                     quantity: 5,
-                    amount: 200,
+                    amount: 30,
                 },
                 {
                     order_title: 'Logo Design',
                     description: 'lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt',
-                    quantity: 5,
-                    amount: 200,
-                },
-                {
-                    order_title: 'Logo Design',
-                    description: 'lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt',
-                    quantity: 5,
-                    amount: 200,
+                    quantity: 3,
+                    amount: 60,
                 },
             ]
         },
@@ -106,7 +101,7 @@ const initState = {
             date: "10/7/2021",
             no: 42526,
             customer: 'Customer',
-            amount: 78,
+            alt_no,
             stats: 'Paid',
             invoice_no: 9876543456789,
             company_info:{

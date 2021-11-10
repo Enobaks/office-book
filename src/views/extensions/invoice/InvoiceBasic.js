@@ -15,15 +15,15 @@ const InvoiceBasic = ({match}) => {
     useEffect(() => {
         if(id !== undefined && id.length > 0 && invoiceData.length > 0){
             const selectedData = invoiceData.filter(e => e.no === +id)
-            console.log(selectedData)
             setSingleData(selectedData)
+            console.log(selectedData)
         }
     }, [id, invoiceData])
     
     const handlePrint = useReactToPrint({
         content: () => inputEl.current
     });
-
+    
     return (
         <React.Fragment>
             {
@@ -106,7 +106,7 @@ const InvoiceBasic = ({match}) => {
                                         Invoice Number <span>#{data.invoice_no}</span>
                                     </h6>
                                     <h6 className="text-uppercase text-primary">
-                                        Total Due :<span>{data.alt_no()}</span>
+                                        Total Due :<span>{data.alt_no() + (data.alt_no() * 0.1) - (data.alt_no() * 0.05)}</span>
                                     </h6>
                                 </div>
                             </div>
@@ -132,7 +132,7 @@ const InvoiceBasic = ({match}) => {
                                                             </p>
                                                         </td>
                                                         <td>{order.quantity}</td>
-                                                        <td>${order.amount}</td>
+                                                        <td>${data.alt_no()}</td>
                                                         <td>${order.quantity * order.amount}</td>
                                                     </tr>
                                             ))}
@@ -148,15 +148,15 @@ const InvoiceBasic = ({match}) => {
                                         <tbody>
                                             <tr>
                                                 <th>Sub Total :</th>
-                                                <td>$4725.00</td>
+                                                <td>{data.alt_no()}</td>
                                             </tr>
                                             <tr>
                                                 <th>Taxes (10%) :</th>
-                                                <td>$57.00</td>
+                                                <td>{(data.alt_no() * 0.1)}</td>
                                             </tr>
                                             <tr>
                                                 <th>Discount (5%) :</th>
-                                                <td>$45.00</td>
+                                                <td>{(data.alt_no() * 0.05)}</td>
                                             </tr>
                                             <tr className="text-info">
                                                 <td>
@@ -165,7 +165,7 @@ const InvoiceBasic = ({match}) => {
                                                 </td>
                                                 <td>
                                                     <hr />
-                                                    <h5 className="text-primary">$ 4827.00</h5>
+                                                    <h5 className="text-primary">{data.alt_no() + (data.alt_no() * 0.1) - (data.alt_no() * 0.05)}</h5>
                                                 </td>
                                             </tr>
                                         </tbody>
