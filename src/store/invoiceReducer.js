@@ -1,6 +1,6 @@
 import { ADD_ITEM } from "./actions";
 
-function alt_no(){
+export function alt_no(){
   return this.orders.map(data=>data.amount *data.quantity).reduce((a, b)=> a+b)
 }
 const initState = {
@@ -8,7 +8,6 @@ const initState = {
         {
             date: "10-7-2021",
             no: 422326,
-            customer: 'Customer',
             alt_no,
             stats: 'Paid',
             invoice_no: 9876543456789,
@@ -55,7 +54,6 @@ const initState = {
             date: "06-05-2021",
             no: 10983,
             alt_no,
-            customer: 'Customer',
             stats: 'Pending',
             invoice_no: 346798734566,
             company_info:{
@@ -100,12 +98,11 @@ const initState = {
         {
             date: "10/7/2021",
             no: 42526,
-            customer: 'Customer',
             alt_no,
             stats: 'Paid',
             invoice_no: 9876543456789,
             company_info:{
-                company_name: 'Magneto',
+                company_name: 'Elementor',
                 address: '1065 Mandan Road, Columbia MO, Missouri. (123)-65202',
                 mail: 'demo@gmail.com',
                 phone: '+91 919-91-91-919'
@@ -149,7 +146,7 @@ const InvoiceReducer = (state= initState, action)=>{
     switch(action.type){
         case ADD_ITEM:
             return {
-                invoiceData: [...initState, action.payload]
+                invoiceData: action.payload
             }
             default:
                 return state

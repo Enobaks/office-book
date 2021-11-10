@@ -132,7 +132,7 @@ const InvoiceBasic = ({match}) => {
                                                             </p>
                                                         </td>
                                                         <td>{order.quantity}</td>
-                                                        <td>${data.alt_no()}</td>
+                                                        <td>${order.amount}</td>
                                                         <td>${order.quantity * order.amount}</td>
                                                     </tr>
                                             ))}
