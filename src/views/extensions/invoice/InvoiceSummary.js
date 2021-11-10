@@ -82,7 +82,6 @@ const InvoiceSummary = () => {
     }
   }
   const [invDatas, setInvDatas] = useState(createObj());
-  const newObj = new createObj()
   const [filteredInvoice, setFilteredInvoice] = useState(null);
 
   const filterInvoice = (e) => {
@@ -185,30 +184,30 @@ const InvoiceSummary = () => {
                   invoiceData.length > 0 &&
                   filteredInvoice.length > 0
                     ? filteredInvoice.map((values, index) => (
-                        <tr>
-                          <th scope="row">{index + 1}</th>
-                          <td>{values.date}</td>
-                          <td>{values.no}</td>
-                          <td>{values.customer + (index + 1)}</td>
-                          <td>{`$ ${values.amount}`}</td>
-                          <td>
-                            <label
-                              className={`filter-status ${
-                                values.stats === "Paid"
-                                  ? "success"
-                                  : values.stats === "Pending"
-                                  ? "pending"
-                                  : "draft"
-                              }`}
-                            >
-                              {values.stats}
-                            </label>
-                          </td>
-                          <td>
-                            <Link to="/invoice/invoice-basic/12345">View</Link>
-                          </td>
-                        </tr>
-                      ))
+                      <tr>
+                        <th scope="row">{index + 1}</th>
+                        <td>{values.date}</td>
+                        <td>{values.no}</td>
+                        <td>{values.company_info.company_name}</td>
+                        <td>{`$ ${values.alt_no()}`}</td>
+                        <td>
+                          <label
+                            className={`filter-status ${
+                              values.stats === "Paid"
+                                ? "success"
+                                : values.stats === "Pending"
+                                ? "pending"
+                                : "draft"
+                            }`}
+                          >
+                            {values.stats}
+                          </label>
+                        </td>
+                        <td>
+                          <Link to={`/invoice/invoice-basic/${values.no}`}>View</Link>
+                        </td>
+                      </tr>
+                    ))
                     : invoiceData.map((values, index) => (
                         <tr>
                           <th scope="row">{index + 1}</th>

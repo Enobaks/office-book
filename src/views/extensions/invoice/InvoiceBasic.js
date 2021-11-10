@@ -16,7 +16,6 @@ const InvoiceBasic = ({match}) => {
         if(id !== undefined && id.length > 0 && invoiceData.length > 0){
             const selectedData = invoiceData.filter(e => e.no === +id)
             setSingleData(selectedData)
-            console.log(selectedData)
         }
     }, [id, invoiceData])
     
