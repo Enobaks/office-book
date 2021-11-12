@@ -1,7 +1,7 @@
 import { ADD_ITEM } from "./actions";
 
 export function alt_no(){
-  return this.orders.map(data=>data.amount *data.quantity).reduce((a, b)=> a+b)
+  return Math.ceil(this.orders.map(data=>data.amount *data.quantity).reduce((a, b)=> a+b))
 }
 const initState = {
     invoiceData: [

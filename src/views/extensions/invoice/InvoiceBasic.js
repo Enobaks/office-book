@@ -151,11 +151,11 @@ const InvoiceBasic = ({match}) => {
                                             </tr>
                                             <tr>
                                                 <th>Taxes (10%) :</th>
-                                                <td>{(data.alt_no() * 0.1)}</td>
+                                                <td>{Math.floor(data.alt_no() * 0.1)}</td>
                                             </tr>
                                             <tr>
                                                 <th>Discount (5%) :</th>
-                                                <td>{(data.alt_no() * 0.05)}</td>
+                                                <td>{Math.floor(data.alt_no() * 0.05)}</td>
                                             </tr>
                                             <tr className="text-info">
                                                 <td>

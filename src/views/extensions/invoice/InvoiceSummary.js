@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col, Card, Table, Modal, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 // import ReChartSalesExpenses from "./chart/ReChartSalesExpenses";
@@ -6,7 +6,7 @@ import "./invoiceSummary.css";
 import { ADD_ITEM } from "../../../store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { alt_no } from "../../../store/invoiceReducer";
-
+import { validate, createDate, setError, displayError, resetFields } from "./validateInvoice";
 
 
 const InvoiceSummary = () => {
@@ -34,7 +34,17 @@ const InvoiceSummary = () => {
   };
 
   const handleClose = () => {
+    resetFields(errors, (v)=> setErrors({...v}))
     const combine = {...invDatas, orders:[...invDatas.orders, ...items]}
+    
+    const errorList = (validate(combine))
+    console.log(errorList)
+    if(errorList.length > 0){
+      setError(errorList, errors, (dat)=> {
+        setErrors({...dat})
+      })
+      return
+    }
     const allDatas = [...invoiceData, combine]
     dispatch({
       type:ADD_ITEM,
@@ -61,7 +71,7 @@ const InvoiceSummary = () => {
   }
   function createObj (){
     return {
-      date: "",
+      date: createDate(),
       no: parseInt(generateNo(6)),
       alt_no,
       invoice_no: parseInt(generateNo(13)),
@@ -70,7 +80,11 @@ const InvoiceSummary = () => {
         company_name: '',
         address: '',
         mail: '',
-        phone: ''
+        phone: '',
+        city: '',
+        zip: '',
+        country: '',
+        website: ''
     },
     client_info:{
         client_name:'',
@@ -83,7 +97,22 @@ const InvoiceSummary = () => {
   }
   const [invDatas, setInvDatas] = useState(createObj());
   const [filteredInvoice, setFilteredInvoice] = useState(null);
-
+  const [errors, setErrors] = useState({
+      company_nameErrors: '',
+      addressErrors: '',
+      mailErrors: '',
+      phoneErrors: '',
+      cityErrors: '',
+      ordersErrors: '',
+      zipErrors: '',
+      countryErrors: '',
+      websiteErrors: '',
+      client_nameErrors:'',
+      client_addressErrors: '',
+      client_phoneErrors: '',
+      client_mailErrors: ''
+  })
+  
   const filterInvoice = (e) => {
     const filteredDatas = invoiceData.filter(
       (data) => data.stats === e.target.value
@@ -254,101 +283,141 @@ const InvoiceSummary = () => {
         <Modal.Body>
           <h4 className="mb-4 bill">Bill From</h4>
           <div className="company">
-            <label htmlFor="companyName">Name</label>
-            <input
-              name="companyName"
-              type="text"
-              onChange={(e)=>{
-                setInvDatas({...invDatas, company_info:{
-                  ...invDatas.company_info, company_name: e.target.value
-                }})
-              }}
-              className="w-100 company-input mb-3"
-            />
-            <div className="short-input my-3">
-              <label htmlFor="companyEmail" className="mr-1">
-                Email
-              </label>
+            <div className="ctrler">
+              <label htmlFor="companyName">Name</label>
               <input
-                name="companyEmail"
+                name="companyName"
                 type="text"
-                className="email company-input"
                 onChange={(e)=>{
                   setInvDatas({...invDatas, company_info:{
-                    ...invDatas.company_info, mail: e.target.value
+                    ...invDatas.company_info, company_name: e.target.value
                   }})
                 }}
+                className="w-100 company-input mb-3"
               />
-              <label htmlFor="companyNo" className="mr-1">
-                Phone No
-              </label>
-              <input
-                name="companyNo"
-                type="text"
-                className="phone company-input"
-                onChange={(e)=>{
-                  setInvDatas({...invDatas, company_info:{
-                    ...invDatas.company_info, phone: e.target.value
-                  }})
-                }}
-              />
+              {errors.company_nameErrors && displayError(errors.company_nameErrors)}
+            </div>
+            <div className="short-input d-flex my-3">
+              <div className="short-ctrler">
+                <label htmlFor="companyEmail" className="mr-1">
+                  Email
+                </label>
+                <input
+                  name="companyEmail"
+                  type="text"
+                  className="email company-input"
+                  onChange={(e)=>{
+                    setInvDatas({...invDatas, company_info:{
+                      ...invDatas.company_info, mail: e.target.value
+                    }})
+                  }}
+                />
+                {errors.mailErrors && displayError(errors.mailErrors)}
+              </div>
+              <div className="short-ctrler righter">
+                <label htmlFor="companyNo" className="mr-1">
+                  Phone No
+                </label>
+                <input
+                  name="companyNo"
+                  type="text"
+                  className="phone company-input"
+                  onChange={(e)=>{
+                    setInvDatas({...invDatas, company_info:{
+                      ...invDatas.company_info, phone: e.target.value
+                    }})
+                  }}
+                />
+                {errors.phoneErrors && displayError(errors.phoneErrors)}
+              </div>
+            </div>
+            <div className="ctrler">
               <label htmlFor="companyWebsite" className="mr-1">
                 Website
               </label>
               <input
                 name="companyWebsite"
                 type="text"
-                className="w-30 company-input"
+                className="website company-input mb-3"
+                onChange={(e)=>{
+                  setInvDatas({...invDatas, company_info:{
+                    ...invDatas.company_info, website: e.target.value
+                  }})
+                }}
               />
+              {errors.websiteErrors && displayError(errors.websiteErrors)}
             </div>
-            <label htmlFor="companyWebsite" className="mr-1">
-              Website
-            </label>
-            <input
-              name="companyWebsite"
-              type="text"
-              className="website company-input mb-3"
-            />
-            <label htmlFor="companyAddress">Address</label>
-            <input
-              name="companyAddress"
-              type="text"
-              className="w-100 company-input mb-3"
-              onChange={(e)=>{
-                setInvDatas({...invDatas, company_info:{
-                  ...invDatas.company_info, address: e.target.value
-                }})
-              }}
-            />
-            <div className="short-input my-3">
-              <label htmlFor="companyCity" className="mr-1">
-                City
+            <div className="ctrler">
+              <label htmlFor="companyAddress">Address</label>
+              <input
+                name="companyAddress"
+                type="text"
+                className="w-100 company-input mb-3"
+                onChange={(e)=>{
+                  setInvDatas({...invDatas, company_info:{
+                    ...invDatas.company_info, address: e.target.value
+                  }})
+                }}
+              />
+              {errors.addressErrors && displayError(errors.addressErrors)}
+            </div>
+            
+            <div className="short-input d-flex my-3">
+              <div className="short-ctrler">
+                <label htmlFor="companyCity" className="mr-1">
+                  City
+                </label>
+                <input
+                  name="companyCity"
+                  type="text"
+                  className="city company-input"
+                  onChange={(e)=>{
+                    setInvDatas({...invDatas, company_info:{
+                      ...invDatas.company_info, city: e.target.value
+                    }})
+                  }}
+                />
+                {errors.cityErrors && displayError(errors.cityErrors)}
+              </div>
+              <div className="short-ctrler righter">
+                <label htmlFor="companyZipcode" className="mr-1">
+                  Zip Code
+                </label>
+                <input
+                  name="companyZipcode"
+                  type="text"
+                  className="zipcode company-input"
+                  onChange={(e)=>{
+                    setInvDatas({...invDatas, company_info:{
+                      ...invDatas.company_info, zip: e.target.value
+                    }})
+                  }}
+                />
+                {errors.zipErrors && displayError(errors.zipErrors)}
+                
+              </div>
+            
+            </div>
+            <div className="ctrler">
+              <label htmlFor="companyCountry" className="mr-1 mt-3">
+                Country
               </label>
               <input
-                name="companyCity"
+                name="companyCountry"
                 type="text"
-                className="city company-input"
+                className="w-100 company-input mb-3"
+                onChange={(e)=>{
+                  setInvDatas({...invDatas, company_info:{
+                    ...invDatas.company_info, country: e.target.value
+                  }})
+                }}
               />
-              <label htmlFor="companyZipcode" className="mr-1">
-                Zip Code
-              </label>
-              <input
-                name="companyZipcode"
-                type="text"
-                className="zipcode company-input"
-              />
-            </div>
-            <label htmlFor="companyCountry" className="mr-1">
-              Country
-            </label>
-            <input
-              name="companyCountry"
-              type="text"
-              className="w-100 company-input"
-            />
+              {errors.countryErrors && displayError(errors.countryErrors)}     
+            </div>   
           </div>
           <h4 className="my-5 bill">Bill To</h4>
           <div className="client">
+          <div className="ctrler">
             <label htmlFor="clientName">Name</label>
             <input
               name="clientName"
@@ -360,6 +429,9 @@ const InvoiceSummary = () => {
                 }})
               }}
             />
+             {errors.client_nameErrors && displayError(errors.client_nameErrors)}
+          </div>
+          <div className="ctrler">
             <label htmlFor="clientEmail" className="mr-1">
               Email
             </label>
@@ -373,6 +445,9 @@ const InvoiceSummary = () => {
                 }})
               }}
             />
+             {errors.client_mailErrors && displayError(errors.client_mailErrors)}
+          </div>
+          <div className="ctrler">
             <label htmlFor="clientAddress">Address</label>
             <input
               name="clientAddress"
@@ -384,6 +459,9 @@ const InvoiceSummary = () => {
                 }})
               }}
             />
+             {errors.client_addressErrors && displayError(errors.client_addressErrors)}
+          </div>
+          <div className="ctrler">
             <label htmlFor="clientPhone">Phone No</label>
             <input
               name="clientPhone"
@@ -394,9 +472,12 @@ const InvoiceSummary = () => {
                   ...invDatas.client_info, client_phone: e.target.value
                 }})
               }}
-            />
+            /> 
+            {errors.client_phoneErrors && displayError(errors.client_phoneErrors)}
+          </div>
+            
 
-            <div className="payment-wrap my-4">
+            {/* <div className="payment-wrap my-4">
               <label htmlFor="invoicedate" className="mr-1">
                 Invoice Date
               </label>
@@ -417,7 +498,7 @@ const InvoiceSummary = () => {
                 type="text"
                 className="w-40 client-input"
               />
-            </div>
+            </div> */}
             <div className="product-section">
               <h4 className="items mt-2">Product/Service List</h4>
               {items.map((item, i) => {
