@@ -29,8 +29,9 @@ const InvoiceSummary = () => {
     setItems(itemList);
   };
 
+  const handleFormValidation = () => {};
+
   const handleClose = () => setShow(false);
-  const handleShow = () => console.log(show);
   const statsDefault = ["Paid", "Pending", "Draft"];
   const dispatch = useDispatch();
   const { invoiceData } = useSelector((state) => state.invoice);
@@ -49,15 +50,15 @@ const InvoiceSummary = () => {
     stats: statsDefault[Math.floor(Math.random() * statsDefault.length)],
   };
   const [filteredInvoice, setFilteredInvoice] = useState(null);
-  const handleClick = () => {
-    // const allDatas = [...invoiceData, invDatas]
-    // dispatch({
-    //   type:ADD_ITEM,
-    //   payload: allDatas
-    // })
-    // setInvDatas({...invDatas, ...defaultData})
-    // setShow(false)
-  };
+  // const handleClick = () => {
+  // const allDatas = [...invoiceData, invDatas]
+  // dispatch({
+  //   type:ADD_ITEM,
+  //   payload: allDatas
+  // })
+  // setInvDatas({...invDatas, ...defaultData})
+  // setShow(false)
+  // };
 
   const filterInvoice = (e) => {
     const filteredDatas = invoiceData.filter(
@@ -66,22 +67,11 @@ const InvoiceSummary = () => {
     setFilteredInvoice(filteredDatas);
   };
 
-  // const searchInvoice = (e) => {
-  //   const searchFilter = invoiceData.filter((data) => {
-  //     for (let value in data) {
-  //       if (e.target.value.trim().length <= 0) return [data];
-  //       console.log(data[value]);
-  //       if (data[value].includes(e.target.value)) {
-  //       }
-  //     }
-  //   });
-  //   setFilteredInvoice(searchFilter);
-  //   console.log(e.target.value);
-  // };
+ 
 
-  const [searchText, setSearchText] = useState("");
+  // const [searchText, setSearchText] = useState("");
   const searchInvoice = (value) => {
-    setSearchText(value);
+    // setSearchText(value);
     filterData(value);
   };
 
@@ -226,206 +216,201 @@ const InvoiceSummary = () => {
             New Invoice
           </Modal.Title>
         </Modal.Header>
+        
         <Modal.Body>
-          <h4 className="mb-4 bill">Bill From</h4>
-          <div className="company">
-            <label htmlFor="companyName">Name</label>
-            <input
-              name="companyName"
-              type="text"
-              className="w-100 company-input mb-3"
-            />
-            <div className="short-input my-3">
-              <label htmlFor="companyEmail" className="mr-1">
+          <form>
+            <h4 className="mb-4 bill">Bill From</h4>
+            <div className="company">
+              <label htmlFor="companyName">Name</label>
+              <input
+                name="companyName"
+                type="text"
+                className="w-100 company-input mb-3"
+              />
+              <div className="short-input my-3">
+                <label htmlFor="companyEmail" className="mr-1">
+                  Email
+                </label>
+                <input
+                  name="companyEmail"
+                  type="text"
+                  className="email company-input"
+                />
+                <label htmlFor="companyNo" className="mr-1">
+                  Phone No
+                </label>
+                <input
+                  name="companyNo"
+                  type="text"
+                  className="phone company-input"
+                />
+              </div>
+              <label htmlFor="companyWebsite" className="mr-1">
+                Website
+              </label>
+              <input
+                name="companyWebsite"
+                type="text"
+                className="website company-input mb-3"
+              />
+              <label htmlFor="companyAddress">Address</label>
+              <input
+                name="companyAddress"
+                type="text"
+                className="w-100 company-input mb-3"
+              />
+              <div className="short-input my-3">
+                <label htmlFor="companyCity" className="mr-1">
+                  City
+                </label>
+                <input
+                  name="companyCity"
+                  type="text"
+                  className="city company-input"
+                />
+                <label htmlFor="companyZipcode" className="mr-1">
+                  Zip Code
+                </label>
+                <input
+                  name="companyZipcode"
+                  type="text"
+                  className="zipcode company-input"
+                />
+              </div>
+              <label htmlFor="companyCountry" className="mr-1">
+                Country
+              </label>
+              <input
+                name="companyCountry"
+                type="text"
+                className="w-100 company-input"
+              />
+            </div>
+            <h4 className="my-5 bill">Bill To</h4>
+            <div className="client">
+              <label htmlFor="clientName">Name</label>
+              <input
+                name="clientName"
+                type="text"
+                className="w-100 client-input mb-3"
+              />
+              <label htmlFor="clientEmail" className="mr-1">
                 Email
               </label>
               <input
-                name="companyEmail"
+                name="clientEmail"
                 type="text"
-                className="email company-input"
+                className="w-100 client-input mb-3"
               />
-              <label htmlFor="companyNo" className="mr-1">
-                Phone No
-              </label>
+              <label htmlFor="clientAddress">Address</label>
               <input
-                name="companyNo"
+                name="clientAddress"
                 type="text"
-                className="phone company-input"
+                className="w-100 client-input mb-3"
               />
-            </div>
-            <label htmlFor="companyWebsite" className="mr-1">
-              Website
-            </label>
-            <input
-              name="companyWebsite"
-              type="text"
-              className="website company-input mb-3"
-            />
-            <label htmlFor="companyAddress">Address</label>
-            <input
-              name="companyAddress"
-              type="text"
-              className="w-100 company-input mb-3"
-            />
-            <div className="short-input my-3">
-              <label htmlFor="companyCity" className="mr-1">
-                City
-              </label>
+              <label htmlFor="clientPhone">Phone No</label>
               <input
-                name="companyCity"
+                name="clientPhone"
                 type="text"
-                className="city company-input"
+                className="w-100 client-input mb-3"
               />
-              <label htmlFor="companyZipcode" className="mr-1">
-                Zip Code
-              </label>
-              <input
-                name="companyZipcode"
-                type="text"
-                className="zipcode company-input"
-              />
-            </div>
-            <label htmlFor="companyCountry" className="mr-1">
-              Country
-            </label>
-            <input
-              name="companyCountry"
-              type="text"
-              className="w-100 company-input"
-            />
-          </div>
-          <h4 className="my-5 bill">Bill To</h4>
-          <div className="client">
-            <label htmlFor="clientName">Name</label>
-            <input
-              name="clientName"
-              type="text"
-              className="w-100 client-input mb-3"
-            />
-            <label htmlFor="clientEmail" className="mr-1">
-              Email
-            </label>
-            <input
-              name="clientEmail"
-              type="text"
-              className="w-100 client-input mb-3"
-            />
-            <label htmlFor="clientAddress">Address</label>
-            <input
-              name="clientAddress"
-              type="text"
-              className="w-100 client-input mb-3"
-            />
-            <label htmlFor="clientPhone">Phone No</label>
-            <input
-              name="clientPhone"
-              type="text"
-              className="w-100 client-input mb-3"
-            />
 
-            <div className="payment-wrap my-4">
-              <label htmlFor="invoicedate" className="mr-1">
-                Invoice Date
-              </label>
-              <input
-                name="invoicedate"
-                type="date"
-                value={invDatas.date}
-                onChange={(e) => {
-                  setInvDatas({ ...invDatas, date: e.target.value });
-                }}
-                className="w-40 client-input"
-              />
-              <label htmlFor="paymentdue" className="mr-1">
-                Payment Due
-              </label>
-              <input
-                name="paymentdue"
-                type="text"
-                className="w-40 client-input"
-              />
-            </div>
-            <div className="product-section">
-              <h4 className="items mt-2">Product/Service List</h4>
-              {items.map((item, i) => {
-                return (
-                  <div key={i} className="item-table mb-3">
-                    <div className="item1 my-3">
-                      <div className="item1-name">
-                        <input
-                          name="name"
-                          type="text"
-                          value={item.name}
-                          className="item-name "
-                          placeholder="Product name"
-                          onChange={(e) => handleChange(e, i)}
-                        />
-                      </div>
-                      <div className="item1-qty">
-                        <input
-                          name="qty"
-                          type="number"
-                          value={item.qty}
-                          className="item-qty"
-                          placeholder="qty"
-                          onChange={(e) => handleChange(e, i)}
-                        />
-                      </div>
-                      <div className="item1-price">
-                        <input
-                          name="price"
-                          type="number"
-                          value={item.price}
-                          className="item-price w-10"
-                          placeholder="amount"
-                          onChange={(e) => handleChange(e, i)}
-                        />
-                      </div>
-                      <div className="item1-total">
-                        <p>Total item</p>
-                      </div>
-                      <div className="item1-description">
-                        <input
-                          name="name"
-                          type="text"
-                          value={item.name}
-                          className="item-name w-90"
-                          placeholder="Product description"
-                          onChange={(e) => handleChange(e, i)}
-                        />
-                      </div>
-                      <div className="item1-bin">
-                        <i
-                          className="fa fa-trash bin"
-                          onClick={() => handleRemoveInput(i)}
-                        ></i>
+              <div className="payment-wrap my-4">
+                <label htmlFor="invoicedate" className="mr-1">
+                  Invoice Date
+                </label>
+                <input
+                  name="invoicedate"
+                  type="date"
+                  value={invDatas.date}
+                  onChange={(e) => {
+                    setInvDatas({ ...invDatas, date: e.target.value });
+                  }}
+                  className="w-40 client-input"
+                />
+                <label htmlFor="paymentdue" className="mr-1">
+                  Payment Due
+                </label>
+                <input
+                  name="paymentdue"
+                  type="text"
+                  className="w-40 client-input"
+                />
+              </div>
+              <div className="product-section">
+                <h4 className="items mt-2">Product/Service List</h4>
+                {items.map((item, i) => {
+                  return (
+                    <div key={i} className="item-table mb-3">
+                      <div className="item1 my-3">
+                        <div className="item1-name">
+                          <input
+                            name="name"
+                            type="text"
+                            value={item.name}
+                            className="item-name "
+                            placeholder="Product name"
+                            onChange={(e) => handleChange(e, i)}
+                          />
+                        </div>
+                        <div className="item1-qty">
+                          <input
+                            name="qty"
+                            type="number"
+                            value={item.qty}
+                            className="item-qty"
+                            placeholder="qty"
+                            onChange={(e) => handleChange(e, i)}
+                          />
+                        </div>
+                        <div className="item1-price">
+                          <input
+                            name="price"
+                            type="number"
+                            value={item.price}
+                            className="item-price w-10"
+                            placeholder="amount"
+                            onChange={(e) => handleChange(e, i)}
+                          />
+                        </div>
+                        <div className="item1-total">
+                          <p>Total item</p>
+                        </div>
+                        <div className="item1-description">
+                          <input
+                            name="name"
+                            type="text"
+                            value={item.name}
+                            className="item-name w-90"
+                            placeholder="Product description"
+                            onChange={(e) => handleChange(e, i)}
+                          />
+                        </div>
+                        <div className="item1-bin">
+                          <i
+                            className="fa fa-trash bin"
+                            onClick={() => handleRemoveInput(i)}
+                          ></i>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
-              {/* <Table>
-                <thead>
-                  <tr>
-                    <th>Item Name</th>
-                    <th>Qty</th>
-                    <th>Price</th>
-                    <th>Total</th>
-                  </tr>
-                </thead>
-                
-              </Table> */}
-              <div className="add-btn-wrap">
-                <button onClick={handleAddInput} className="add-btn">
-                  <i class="fas fa-plus mr-2"></i>Add New Item
-                </button>
+                  );
+                })}
+
+                <div className="add-btn-wrap">
+                  <button onClick={handleAddInput} className="add-btn">
+                    <i class="fas fa-plus mr-2"></i>Add New Item
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
+          </form>
         </Modal.Body>
         {/* //The modal footer */}
         <Modal.Footer>
-          <Button onClick={handleClose}>Close</Button>
+          <Button type="submit" onClick={handleFormValidation}>
+            Submit
+          </Button>
         </Modal.Footer>
       </Modal>
     </React.Fragment>

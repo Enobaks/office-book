@@ -10,14 +10,16 @@ const FileUpload = () => {
     acceptedFiles: "image/jpeg,image/png,image/gif",
     autoProcessQueue: false,
     uploadprogress: 100,
+    maxFiles: 1,
   };
 
   const config = {
     iconFiletypes: [".jpg", ".png", ".gif"],
     showFiletypeIcon: true,
     postUrl: "/",
+    maxFiles: 1,
   };
-
+  const rand = 1
   const eventHandlers = (file) => {
     console.log(file);
   };
