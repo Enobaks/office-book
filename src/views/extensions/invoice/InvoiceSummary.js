@@ -489,6 +489,7 @@ const InvoiceSummary = () => {
             <div className="product-section">
               <h4 className="items mt-2">Product/Service List</h4>
               {items.map((item, i) => (
+                
               }
 
               <div className="add-btn-wrap">
@@ -498,7 +499,7 @@ const InvoiceSummary = () => {
               </div>
             </div>
           </div>
-        
+          https://github.com/Enobaks/office-book-test
            
           
         </Modal.Body>
