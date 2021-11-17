@@ -1,19 +1,33 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import { Link } from 'react-router-dom';
 
 import darkLogo from '../../../assets/images/logo-dark.png';
+import { useSelector, useDispatch } from 'react-redux';
 
-const InvoiceBasic = () => {
+
+
+const InvoiceBasic = ({match}) => {
     const inputEl = useRef(null);
-
+    const {invoiceData} = useSelector(state => state.invoice)
+    const id = match.params.id
+    const [singleData, setSingleData] = useState(null)
+    useEffect(() => {
+        if(id !== undefined && id.length > 0 && invoiceData.length > 0){
+            const selectedData = invoiceData.filter(e => e.no === +id)
+            setSingleData(selectedData)
+        }
+    }, [id, invoiceData])
+    
     const handlePrint = useReactToPrint({
         content: () => inputEl.current
     });
-
+    
     return (
         <React.Fragment>
-            <div className="container" id="printTable">
+            {
+                singleData && singleData.map(data=>(
+                    <div key={data.no} className="container" id="printTable">
                 <div>
                     <div className="card" ref={inputEl}>
                         <div className="row invoice-contact">
@@ -30,20 +44,20 @@ const InvoiceBasic = () => {
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Company name </td>
+                                                    <td>{data.company_info.company_name}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>1065 Mandan Road, Columbia MO, Missouri. (123)-65202</td>
+                                                    <td>{data.company_info.address}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <a className="text-secondary" href="mailto:demo@gmail.com" target="_top">
-                                                            demo@gmail.com
+                                                        <a className="text-secondary" href= {data.company_info.mail} target="_top">
+                                                           {data.company_info.mail}
                                                         </a>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>+91 919-91-91-919</td>
+                                                    <td>{data.company_info.phone}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -55,13 +69,13 @@ const InvoiceBasic = () => {
                         <div className="card-body">
                             <div className="row invoive-info">
                                 <div className="col-md-4 col-xs-12 invoice-client-info">
-                                    <h6>Client Information :</h6>
-                                    <h6 className="m-0">Josephin Villa</h6>
-                                    <p className="m-0 m-t-10">1065 Mandan Road, Columbia MO, Missouri. (123)-65202</p>
-                                    <p className="m-0">(1234) - 567891</p>
+                                    <h6>Client Information:</h6>
+                                    <h6 className="m-0">{data.client_info.client_name}</h6>
+                                    <p className="m-0 m-t-10">{data.client_info.client_address}</p>
+                                    <p className="m-0">{data.client_info.client_phone}</p>
                                     <p>
-                                        <a className="text-secondary" href="mailto:demo@gmail.com" target="_top">
-                                            demo@gmail.com
+                                        <a className="text-secondary" href={data.client_info.client_mail} target="_top">
+                                            {data.client_info.client_mail}
                                         </a>
                                     </p>
                                 </div>
@@ -71,27 +85,27 @@ const InvoiceBasic = () => {
                                         <tbody>
                                             <tr>
                                                 <th>Date :</th>
-                                                <td>November 14</td>
+                                                <td>{data.date}</td>
                                             </tr>
                                             <tr>
                                                 <th>Status :</th>
                                                 <td>
-                                                    <span className="label label-warning">Pending</span>
+                                                    <span className="label label-warning">{data.stats}</span>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>Id :</th>
-                                                <td>#146859</td>
+                                                <td>#{data.no}</td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                                 <div className="col-md-4 col-sm-6">
                                     <h6 className="m-b-20">
-                                        Invoice Number <span>#125863478945</span>
+                                        Invoice Number <span>#{data.invoice_no}</span>
                                     </h6>
                                     <h6 className="text-uppercase text-primary">
-                                        Total Due :<span>$950.00</span>
+                                        Total Due :<span>{data.alt_no() + (data.alt_no() * 0.1) - (data.alt_no() * 0.05)}</span>
                                     </h6>
                                 </div>
                             </div>
@@ -108,43 +122,21 @@ const InvoiceBasic = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <h6>Logo Design</h6>
-                                                        <p className="m-0">
-                                                            lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                                            incididunt{' '}
-                                                        </p>
-                                                    </td>
-                                                    <td>6</td>
-                                                    <td>$200.00</td>
-                                                    <td>$1200.00</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <h6>Logo Design</h6>
-                                                        <p className="m-0">
-                                                            lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                                            incididunt{' '}
-                                                        </p>
-                                                    </td>
-                                                    <td>7</td>
-                                                    <td>$100.00</td>
-                                                    <td>$700.00</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <h6>Logo Design</h6>
-                                                        <p className="m-0">
-                                                            lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                                            incididunt{' '}
-                                                        </p>
-                                                    </td>
-                                                    <td>5</td>
-                                                    <td>$150.00</td>
-                                                    <td>$750.00</td>
-                                                </tr>
+                                            {data.orders.map((order, i)=>(
+                                                    <tr key={i}>
+                                                        <td>
+                                                            <h6>{order.order_title}</h6>
+                                                            <p className="m-0">
+                                                                {order.description}
+                                                            </p>
+                                                        </td>
+                                                        <td>{order.quantity}</td>
+                                                        <td>${order.amount}</td>
+                                                        <td>${order.quantity * order.amount}</td>
+                                                    </tr>
+                                            ))}
                                             </tbody>
+                                            
                                         </table>
                                     </div>
                                 </div>
@@ -155,15 +147,15 @@ const InvoiceBasic = () => {
                                         <tbody>
                                             <tr>
                                                 <th>Sub Total :</th>
-                                                <td>$4725.00</td>
+                                                <td>{data.alt_no()}</td>
                                             </tr>
                                             <tr>
                                                 <th>Taxes (10%) :</th>
-                                                <td>$57.00</td>
+                                                <td>{Math.floor(data.alt_no() * 0.1)}</td>
                                             </tr>
                                             <tr>
                                                 <th>Discount (5%) :</th>
-                                                <td>$45.00</td>
+                                                <td>{Math.floor(data.alt_no() * 0.05)}</td>
                                             </tr>
                                             <tr className="text-info">
                                                 <td>
@@ -172,7 +164,7 @@ const InvoiceBasic = () => {
                                                 </td>
                                                 <td>
                                                     <hr />
-                                                    <h5 className="text-primary">$ 4827.00</h5>
+                                                    <h5 className="text-primary">{data.alt_no() + (data.alt_no() * 0.1) - (data.alt_no() * 0.05)}</h5>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -203,6 +195,13 @@ const InvoiceBasic = () => {
                     </div>
                 </div>
             </div>
+                ))
+            }
+            {
+                !singleData && <div>
+                    loading...........
+                </div>
+            }
         </React.Fragment>
     );
 };

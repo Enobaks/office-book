@@ -828,7 +828,7 @@ const routes = [
       // },
       {
         exact: true,
-        path: "/invoice/invoice-basic",
+        path: "/invoice/invoice-basic/:id",
         component: lazy(() =>
           import("./views/extensions/invoice/InvoiceBasic")
         ),
@@ -858,5 +858,6 @@ const routes = [
     ],
   },
 ];
+
 
 export default routes;

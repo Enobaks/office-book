@@ -97,6 +97,28 @@
 .items {
   font-size: 16px !important;
 }
+.ctrler, .short-ctrler{
+  position: relative;
+  margin-top: 1em;
+}
+.short-ctrler{
+  width: 50%;
+}
+.short-ctrler input{
+  width: 90%;
+}
+small{
+position: absolute;
+left: 0;
+bottom: 0;
+}
+.short-ctrler small{
+  bottom: -1.5em;
+  right: -10px;
+}
+.short-input label{
+  display: block;
+}
 .item-qty {
   width: 5rem;
 }

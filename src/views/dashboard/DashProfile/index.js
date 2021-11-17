@@ -1,13 +1,26 @@
 import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
-import { Edit3 } from "react-feather";
+// import { Edit3 } from "react-feather";
 import "./profile.css";
 
 const DashProfile = () => {
   const [edit, setEdit] = useState(true);
+  const [image, setImage] = useState("");
+  const [isUploaded, setIsUploaded] = useState(false);
 
   const handleEdit = () => {
     setEdit(!edit);
+  };
+
+  const handleFileChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      let reader = new FileReader();
+      reader.onload = (e) => {
+        setImage(e.target.result);
+        setIsUploaded(true);
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    }
   };
 
   return (
@@ -90,14 +103,33 @@ const DashProfile = () => {
         <Col md={6} xl={4} className="profile-cont">
           <div className="logo">
             <div className="upload-wrap">
-              <label htmlFor="img-upload">Upload company logo</label>
-              <input type="file" id="img-upload" accept=".jpg,.jpeg,.png" />
+              {!isUploaded ? (
+                <div>
+                  <label htmlFor="img-upload">Upload company logo</label>
+                  <input
+                    type="file"
+                    id="img-upload"
+                    accept=".jpg,.jpeg,.png"
+                    onChange={handleFileChange}
+                  />
+                </div>
+              ) : (
+                <img
+                  id="uploaded-image"
+                  src={image}
+                  alt="uploaded-img"
+                  onClick={() => {
+                    setIsUploaded(false);
+                    setImage(null);
+                  }}
+                />
+              )}
             </div>
           </div>
           {edit ? (
             <div className="edit-wrap" onClick={handleEdit}>
               <p>Edit</p>
-              <Edit3 />
+              {/* <Edit3 /> */}
             </div>
           ) : (
             <button className="btn btn-success save" onClick={handleEdit}>

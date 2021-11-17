@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col, Card, Table, Modal, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 // import ReChartSalesExpenses from "./chart/ReChartSalesExpenses";
 import "./invoiceSummary.css";
 import { ADD_ITEM } from "../../../store/actions";
 import { useSelector, useDispatch } from "react-redux";
+import { alt_no } from "../../../store/invoiceReducer";
+import { validate, createDate, setError, displayError, resetFields } from "./validateInvoice";
+
+
 const InvoiceSummary = () => {
   const [show, setShow] = useState(false);
   const [items, setItems] = useState([
-    { name: "", qty: "", price: "", description: "" },
+    { order_title: "", quantity: "", amount: "", description: "" },
   ]);
 
   const handleChange = (e, index) => {
@@ -20,7 +24,7 @@ const InvoiceSummary = () => {
   };
 
   const handleAddInput = () => {
-    setItems([...items, { name: "", qty: "", price: "", description: "" }]);
+    setItems([...items, { order_title: "", quantity: "", amount: "", description: "" }]);
   };
 
   const handleRemoveInput = (index) => {
@@ -29,37 +33,86 @@ const InvoiceSummary = () => {
     setItems(itemList);
   };
 
-  const handleFormValidation = () => {};
-
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    resetFields(errors, (v)=> setErrors({...v}))
+    const combine = {...invDatas, orders:[...invDatas.orders, ...items]}
+    
+    const errorList = (validate(combine))
+    console.log(errorList)
+    if(errorList.length > 0){
+      setError(errorList, errors, (dat)=> {
+        setErrors({...dat})
+      })
+      return
+    }
+    const allDatas = [...invoiceData, combine]
+    dispatch({
+      type:ADD_ITEM,
+      payload: allDatas
+    })
+    setInvDatas(createObj())
+    setItems([
+      { order_title: "", quantity: "", amount: "", description: "" },
+    ])
+    setShow(false)
+  };
+  const handleShow = () => console.log(show);
   const statsDefault = ["Paid", "Pending", "Draft"];
   const dispatch = useDispatch();
   const { invoiceData } = useSelector((state) => state.invoice);
-  const [invDatas, setInvDatas] = useState({
-    date: "",
-    no: 0,
-    customer: "",
-    amount: 0,
-    stats: statsDefault[Math.floor(Math.random() * statsDefault.length)],
-  });
-  const defaultData = {
-    date: "",
-    no: 0,
-    customer: "",
-    amount: 0,
-    stats: statsDefault[Math.floor(Math.random() * statsDefault.length)],
-  };
-  const [filteredInvoice, setFilteredInvoice] = useState(null);
-  // const handleClick = () => {
-  // const allDatas = [...invoiceData, invDatas]
-  // dispatch({
-  //   type:ADD_ITEM,
-  //   payload: allDatas
-  // })
-  // setInvDatas({...invDatas, ...defaultData})
-  // setShow(false)
-  // };
+  
 
+  const generateNo = (nob)=>{
+    let no = ''
+    for(let i = 0; i< nob; i++){
+      no += Math.floor(Math.random() * i+2)
+    }
+    return no
+  }
+  function createObj (){
+    return {
+      date: createDate(),
+      no: parseInt(generateNo(6)),
+      alt_no,
+      invoice_no: parseInt(generateNo(13)),
+      stats: statsDefault[Math.floor(Math.random() * statsDefault.length)],
+      company_info:{
+        company_name: '',
+        address: '',
+        mail: '',
+        phone: '',
+        city: '',
+        zip: '',
+        country: '',
+        website: ''
+    },
+    client_info:{
+        client_name:'',
+        client_address: '',
+        client_phone: '',
+        client_mail: ''
+    },
+    orders:[]
+    }
+  }
+  const [invDatas, setInvDatas] = useState(createObj());
+  const [filteredInvoice, setFilteredInvoice] = useState(null);
+  const [errors, setErrors] = useState({
+      company_nameErrors: '',
+      addressErrors: '',
+      mailErrors: '',
+      phoneErrors: '',
+      cityErrors: '',
+      ordersErrors: '',
+      zipErrors: '',
+      countryErrors: '',
+      websiteErrors: '',
+      client_nameErrors:'',
+      client_addressErrors: '',
+      client_phoneErrors: '',
+      client_mailErrors: ''
+  })
+  
   const filterInvoice = (e) => {
     const filteredDatas = invoiceData.filter(
       (data) => data.stats === e.target.value
@@ -149,37 +202,37 @@ const InvoiceSummary = () => {
                   invoiceData.length > 0 &&
                   filteredInvoice.length > 0
                     ? filteredInvoice.map((values, index) => (
-                        <tr>
-                          <th scope="row">{index + 1}</th>
-                          <td>{values.date}</td>
-                          <td>{values.no}</td>
-                          <td>{values.customer + (index + 1)}</td>
-                          <td>{`$ ${values.amount}`}</td>
-                          <td>
-                            <label
-                              className={`filter-status ${
-                                values.stats === "Paid"
-                                  ? "success"
-                                  : values.stats === "Pending"
-                                  ? "pending"
-                                  : "draft"
-                              }`}
-                            >
-                              {values.stats}
-                            </label>
-                          </td>
-                          <td>
-                            <Link to="/invoice/invoice-basic">View</Link>
-                          </td>
-                        </tr>
-                      ))
+                      <tr>
+                        <th scope="row">{index + 1}</th>
+                        <td>{values.date}</td>
+                        <td>{values.no}</td>
+                        <td>{values.company_info.company_name}</td>
+                        <td>{`$ ${values.alt_no()}`}</td>
+                        <td>
+                          <label
+                            className={`filter-status ${
+                              values.stats === "Paid"
+                                ? "success"
+                                : values.stats === "Pending"
+                                ? "pending"
+                                : "draft"
+                            }`}
+                          >
+                            {values.stats}
+                          </label>
+                        </td>
+                        <td>
+                          <Link to={`/invoice/invoice-basic/${values.no}`}>View</Link>
+                        </td>
+                      </tr>
+                    ))
                     : invoiceData.map((values, index) => (
                         <tr>
                           <th scope="row">{index + 1}</th>
                           <td>{values.date}</td>
                           <td>{values.no}</td>
-                          <td>{values.customer + (index + 1)}</td>
-                          <td>{`$ ${values.amount}`}</td>
+                          <td>{values.company_info.company_name}</td>
+                          <td>{`$ ${values.alt_no()}`}</td>
                           <td>
                             <label
                               className={`filter-status ${
@@ -194,7 +247,7 @@ const InvoiceSummary = () => {
                             </label>
                           </td>
                           <td>
-                            <Link to="/invoice/invoice-basic">View</Link>
+                            <Link to={`/invoice/invoice-basic/${values.no}`}>View</Link>
                           </td>
                         </tr>
                       ))}
@@ -218,16 +271,24 @@ const InvoiceSummary = () => {
         </Modal.Header>
         
         <Modal.Body>
-          <form>
-            <h4 className="mb-4 bill">Bill From</h4>
-            <div className="company">
+          <h4 className="mb-4 bill">Bill From</h4>
+          <div className="company">
+            <div className="ctrler">
               <label htmlFor="companyName">Name</label>
               <input
                 name="companyName"
                 type="text"
+                onChange={(e)=>{
+                  setInvDatas({...invDatas, company_info:{
+                    ...invDatas.company_info, company_name: e.target.value
+                  }})
+                }}
                 className="w-100 company-input mb-3"
               />
-              <div className="short-input my-3">
+              {errors.company_nameErrors && displayError(errors.company_nameErrors)}
+            </div>
+            <div className="short-input d-flex my-3">
+              <div className="short-ctrler">
                 <label htmlFor="companyEmail" className="mr-1">
                   Email
                 </label>
@@ -235,7 +296,15 @@ const InvoiceSummary = () => {
                   name="companyEmail"
                   type="text"
                   className="email company-input"
+                  onChange={(e)=>{
+                    setInvDatas({...invDatas, company_info:{
+                      ...invDatas.company_info, mail: e.target.value
+                    }})
+                  }}
                 />
+                {errors.mailErrors && displayError(errors.mailErrors)}
+              </div>
+              <div className="short-ctrler righter">
                 <label htmlFor="companyNo" className="mr-1">
                   Phone No
                 </label>
@@ -243,8 +312,16 @@ const InvoiceSummary = () => {
                   name="companyNo"
                   type="text"
                   className="phone company-input"
+                  onChange={(e)=>{
+                    setInvDatas({...invDatas, company_info:{
+                      ...invDatas.company_info, phone: e.target.value
+                    }})
+                  }}
                 />
+                {errors.phoneErrors && displayError(errors.phoneErrors)}
               </div>
+            </div>
+            <div className="ctrler">
               <label htmlFor="companyWebsite" className="mr-1">
                 Website
               </label>
@@ -252,14 +329,31 @@ const InvoiceSummary = () => {
                 name="companyWebsite"
                 type="text"
                 className="website company-input mb-3"
+                onChange={(e)=>{
+                  setInvDatas({...invDatas, company_info:{
+                    ...invDatas.company_info, website: e.target.value
+                  }})
+                }}
               />
+              {errors.websiteErrors && displayError(errors.websiteErrors)}
+            </div>
+            <div className="ctrler">
               <label htmlFor="companyAddress">Address</label>
               <input
                 name="companyAddress"
                 type="text"
                 className="w-100 company-input mb-3"
+                onChange={(e)=>{
+                  setInvDatas({...invDatas, company_info:{
+                    ...invDatas.company_info, address: e.target.value
+                  }})
+                }}
               />
-              <div className="short-input my-3">
+              {errors.addressErrors && displayError(errors.addressErrors)}
+            </div>
+            
+            <div className="short-input d-flex my-3">
+              <div className="short-ctrler">
                 <label htmlFor="companyCity" className="mr-1">
                   City
                 </label>
@@ -267,7 +361,15 @@ const InvoiceSummary = () => {
                   name="companyCity"
                   type="text"
                   className="city company-input"
+                  onChange={(e)=>{
+                    setInvDatas({...invDatas, company_info:{
+                      ...invDatas.company_info, city: e.target.value
+                    }})
+                  }}
                 />
+                {errors.cityErrors && displayError(errors.cityErrors)}
+              </div>
+              <div className="short-ctrler righter">
                 <label htmlFor="companyZipcode" className="mr-1">
                   Zip Code
                 </label>
@@ -275,20 +377,100 @@ const InvoiceSummary = () => {
                   name="companyZipcode"
                   type="text"
                   className="zipcode company-input"
+                  onChange={(e)=>{
+                    setInvDatas({...invDatas, company_info:{
+                      ...invDatas.company_info, zip: e.target.value
+                    }})
+                  }}
                 />
+                {errors.zipErrors && displayError(errors.zipErrors)}
+                
               </div>
-              <label htmlFor="companyCountry" className="mr-1">
+            
+            </div>
+            <div className="ctrler">
+              <label htmlFor="companyCountry" className="mr-1 mt-3">
                 Country
               </label>
               <input
                 name="companyCountry"
                 type="text"
-                className="w-100 company-input"
+                className="w-100 company-input mb-3"
+                onChange={(e)=>{
+                  setInvDatas({...invDatas, company_info:{
+                    ...invDatas.company_info, country: e.target.value
+                  }})
+                }}
               />
-            </div>
-            <h4 className="my-5 bill">Bill To</h4>
-            <div className="client">
+              {errors.countryErrors && displayError(errors.countryErrors)}     
+            </div>   
+          </div>
+          <h4 className="my-5 bill">Bill To</h4>
+          <div className="client">
+            <div className="ctrler">
               <label htmlFor="clientName">Name</label>
+              <input
+                name="clientName"
+                type="text"
+                className="w-100 client-input mb-3"
+                onChange={(e)=>{
+                  setInvDatas({...invDatas, client_info:{
+                    ...invDatas.client_info, client_name: e.target.value
+                  }})
+                }}
+              />
+              {errors.client_nameErrors && displayError(errors.client_nameErrors)}
+            </div>
+            <div className="ctrler">
+              <label htmlFor="clientEmail" className="mr-1">
+                Email
+              </label>
+              <input
+                name="clientEmail"
+                type="text"
+                className="w-100 client-input mb-3"
+                onChange={(e)=>{
+                  setInvDatas({...invDatas, client_info:{
+                    ...invDatas.client_info, client_mail: e.target.value
+                  }})
+                }}
+              />
+              {errors.client_mailErrors && displayError(errors.client_mailErrors)}
+            </div>
+            <div className="ctrler">
+              <label htmlFor="clientAddress">Address</label>
+              <input
+                name="clientAddress"
+                type="text"
+                className="w-100 client-input mb-3"
+                onChange={(e)=>{
+                  setInvDatas({...invDatas, client_info:{
+                    ...invDatas.client_info, client_address: e.target.value
+                  }})
+                }}
+              />
+              {errors.client_addressErrors && displayError(errors.client_addressErrors)}
+            </div>
+            <div className="ctrler">
+              <label htmlFor="clientPhone">Phone No</label>
+              <input
+                name="clientPhone"
+                type="text"
+                className="w-100 client-input mb-3"
+                onChange={(e)=>{
+                  setInvDatas({...invDatas, client_info:{
+                    ...invDatas.client_info, client_phone: e.target.value
+                  }})
+                }}
+              /> 
+              {errors.client_phoneErrors && displayError(errors.client_phoneErrors)}
+            </div>
+            </div>
+
+            {/* <div className="payment-wrap my-4">
+              <label htmlFor="invoicedate" className="mr-1">
+                Invoice Date
+              </label>
               <input
                 name="clientName"
                 type="text"
@@ -302,115 +484,27 @@ const InvoiceSummary = () => {
                 type="text"
                 className="w-100 client-input mb-3"
               />
-              <label htmlFor="clientAddress">Address</label>
-              <input
-                name="clientAddress"
-                type="text"
-                className="w-100 client-input mb-3"
-              />
-              <label htmlFor="clientPhone">Phone No</label>
-              <input
-                name="clientPhone"
-                type="text"
-                className="w-100 client-input mb-3"
-              />
+            </div> */}
+              
+            <div className="product-section">
+              <h4 className="items mt-2">Product/Service List</h4>
+              {items.map((item, i) => (
+              }
 
-              <div className="payment-wrap my-4">
-                <label htmlFor="invoicedate" className="mr-1">
-                  Invoice Date
-                </label>
-                <input
-                  name="invoicedate"
-                  type="date"
-                  value={invDatas.date}
-                  onChange={(e) => {
-                    setInvDatas({ ...invDatas, date: e.target.value });
-                  }}
-                  className="w-40 client-input"
-                />
-                <label htmlFor="paymentdue" className="mr-1">
-                  Payment Due
-                </label>
-                <input
-                  name="paymentdue"
-                  type="text"
-                  className="w-40 client-input"
-                />
-              </div>
-              <div className="product-section">
-                <h4 className="items mt-2">Product/Service List</h4>
-                {items.map((item, i) => {
-                  return (
-                    <div key={i} className="item-table mb-3">
-                      <div className="item1 my-3">
-                        <div className="item1-name">
-                          <input
-                            name="name"
-                            type="text"
-                            value={item.name}
-                            className="item-name "
-                            placeholder="Product name"
-                            onChange={(e) => handleChange(e, i)}
-                          />
-                        </div>
-                        <div className="item1-qty">
-                          <input
-                            name="qty"
-                            type="number"
-                            value={item.qty}
-                            className="item-qty"
-                            placeholder="qty"
-                            onChange={(e) => handleChange(e, i)}
-                          />
-                        </div>
-                        <div className="item1-price">
-                          <input
-                            name="price"
-                            type="number"
-                            value={item.price}
-                            className="item-price w-10"
-                            placeholder="amount"
-                            onChange={(e) => handleChange(e, i)}
-                          />
-                        </div>
-                        <div className="item1-total">
-                          <p>Total item</p>
-                        </div>
-                        <div className="item1-description">
-                          <input
-                            name="name"
-                            type="text"
-                            value={item.name}
-                            className="item-name w-90"
-                            placeholder="Product description"
-                            onChange={(e) => handleChange(e, i)}
-                          />
-                        </div>
-                        <div className="item1-bin">
-                          <i
-                            className="fa fa-trash bin"
-                            onClick={() => handleRemoveInput(i)}
-                          ></i>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-
-                <div className="add-btn-wrap">
-                  <button onClick={handleAddInput} className="add-btn">
-                    <i class="fas fa-plus mr-2"></i>Add New Item
-                  </button>
-                </div>
+              <div className="add-btn-wrap">
+                <button onClick={handleAddInput} className="add-btn">
+                  <i class="fas fa-plus mr-2"></i>Add New Item
+                </button>
               </div>
             </div>
-          </form>
+          </div>
+        
+           
+          
         </Modal.Body>
         {/* //The modal footer */}
         <Modal.Footer>
-          <Button type="submit" onClick={handleFormValidation}>
-            Submit
-          </Button>
+          <Button onClick={handleClose}>Submit and Create Invoice</Button>
         </Modal.Footer>
       </Modal>
     </React.Fragment>
