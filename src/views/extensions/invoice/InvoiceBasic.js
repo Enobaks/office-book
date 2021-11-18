@@ -105,7 +105,7 @@ const InvoiceBasic = ({match}) => {
                                         Invoice Number <span>#{data.invoice_no}</span>
                                     </h6>
                                     <h6 className="text-uppercase text-primary">
-                                        Total Due :<span>{data.alt_no() + (data.alt_no() * 0.1) - (data.alt_no() * 0.05)}</span>
+                                        Total Due :<span>{data.alt_no()}</span>
                                     </h6>
                                 </div>
                             </div>
@@ -149,14 +149,14 @@ const InvoiceBasic = ({match}) => {
                                                 <th>Sub Total :</th>
                                                 <td>{data.alt_no()}</td>
                                             </tr>
-                                            <tr>
+                                            {/* <tr>
                                                 <th>Taxes (10%) :</th>
                                                 <td>{Math.floor(data.alt_no() * 0.1)}</td>
                                             </tr>
                                             <tr>
                                                 <th>Discount (5%) :</th>
                                                 <td>{Math.floor(data.alt_no() * 0.05)}</td>
-                                            </tr>
+                                            </tr> */}
                                             <tr className="text-info">
                                                 <td>
                                                     <hr />
@@ -164,7 +164,7 @@ const InvoiceBasic = ({match}) => {
                                                 </td>
                                                 <td>
                                                     <hr />
-                                                    <h5 className="text-primary">{data.alt_no() + (data.alt_no() * 0.1) - (data.alt_no() * 0.05)}</h5>
+                                                    <h5 className="text-primary">{data.alt_no()}</h5>
                                                 </td>
                                             </tr>
                                         </tbody>
