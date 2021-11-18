@@ -120,11 +120,22 @@ const InvoiceSummary = () => {
     setFilteredInvoice(filteredDatas);
   };
 
- 
+  // const searchInvoice = (e) => {
+  //   const searchFilter = invoiceData.filter((data) => {
+  //     for (let value in data) {
+  //       if (e.target.value.trim().length <= 0) return [data];
+  //       console.log(data[value]);
+  //       if (data[value].includes(e.target.value)) {
+  //       }
+  //     }
+  //   });
+  //   setFilteredInvoice(searchFilter);
+  //   console.log(e.target.value);
+  // };
 
-  // const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState("");
   const searchInvoice = (value) => {
-    // setSearchText(value);
+    setSearchText(value);
     filterData(value);
   };
 
@@ -269,7 +280,6 @@ const InvoiceSummary = () => {
             New Invoice
           </Modal.Title>
         </Modal.Header>
-        
         <Modal.Body>
           <h4 className="mb-4 bill">Bill From</h4>
           <div className="company">
@@ -407,91 +417,158 @@ const InvoiceSummary = () => {
           </div>
           <h4 className="my-5 bill">Bill To</h4>
           <div className="client">
-            <div className="ctrler">
-              <label htmlFor="clientName">Name</label>
-              <input
-                name="clientName"
-                type="text"
-                className="w-100 client-input mb-3"
-                onChange={(e)=>{
-                  setInvDatas({...invDatas, client_info:{
-                    ...invDatas.client_info, client_name: e.target.value
-                  }})
-                }}
-              />
-              {errors.client_nameErrors && displayError(errors.client_nameErrors)}
-            </div>
-            <div className="ctrler">
-              <label htmlFor="clientEmail" className="mr-1">
-                Email
-              </label>
-              <input
-                name="clientEmail"
-                type="text"
-                className="w-100 client-input mb-3"
-                onChange={(e)=>{
-                  setInvDatas({...invDatas, client_info:{
-                    ...invDatas.client_info, client_mail: e.target.value
-                  }})
-                }}
-              />
-              {errors.client_mailErrors && displayError(errors.client_mailErrors)}
-            </div>
-            <div className="ctrler">
-              <label htmlFor="clientAddress">Address</label>
-              <input
-                name="clientAddress"
-                type="text"
-                className="w-100 client-input mb-3"
-                onChange={(e)=>{
-                  setInvDatas({...invDatas, client_info:{
-                    ...invDatas.client_info, client_address: e.target.value
-                  }})
-                }}
-              />
-              {errors.client_addressErrors && displayError(errors.client_addressErrors)}
-            </div>
-            <div className="ctrler">
-              <label htmlFor="clientPhone">Phone No</label>
-              <input
-                name="clientPhone"
-                type="text"
-                className="w-100 client-input mb-3"
-                onChange={(e)=>{
-                  setInvDatas({...invDatas, client_info:{
-                    ...invDatas.client_info, client_phone: e.target.value
-                  }})
-                }}
-              /> 
-              {errors.client_phoneErrors && displayError(errors.client_phoneErrors)}
-            </div>
-            </div>
+          <div className="ctrler">
+            <label htmlFor="clientName">Name</label>
+            <input
+              name="clientName"
+              type="text"
+              className="w-100 client-input mb-3"
+              onChange={(e)=>{
+                setInvDatas({...invDatas, client_info:{
+                  ...invDatas.client_info, client_name: e.target.value
+                }})
+              }}
+            />
+             {errors.client_nameErrors && displayError(errors.client_nameErrors)}
+          </div>
+          <div className="ctrler">
+            <label htmlFor="clientEmail" className="mr-1">
+              Email
+            </label>
+            <input
+              name="clientEmail"
+              type="text"
+              className="w-100 client-input mb-3"
+              onChange={(e)=>{
+                setInvDatas({...invDatas, client_info:{
+                  ...invDatas.client_info, client_mail: e.target.value
+                }})
+              }}
+            />
+             {errors.client_mailErrors && displayError(errors.client_mailErrors)}
+          </div>
+          <div className="ctrler">
+            <label htmlFor="clientAddress">Address</label>
+            <input
+              name="clientAddress"
+              type="text"
+              className="w-100 client-input mb-3"
+              onChange={(e)=>{
+                setInvDatas({...invDatas, client_info:{
+                  ...invDatas.client_info, client_address: e.target.value
+                }})
+              }}
+            />
+             {errors.client_addressErrors && displayError(errors.client_addressErrors)}
+          </div>
+          <div className="ctrler">
+            <label htmlFor="clientPhone">Phone No</label>
+            <input
+              name="clientPhone"
+              type="text"
+              className="w-100 client-input mb-3"
+              onChange={(e)=>{
+                setInvDatas({...invDatas, client_info:{
+                  ...invDatas.client_info, client_phone: e.target.value
+                }})
+              }}
+            /> 
+            {errors.client_phoneErrors && displayError(errors.client_phoneErrors)}
+          </div>
+            
 
             {/* <div className="payment-wrap my-4">
               <label htmlFor="invoicedate" className="mr-1">
                 Invoice Date
               </label>
               <input
-                name="clientName"
-                type="text"
-                className="w-100 client-input mb-3"
+                name="invoicedate"
+                type="date"
+                value={invDatas.date}
+                onChange={(e) => {
+                  setInvDatas({ ...invDatas, date: e.target.value });
+                }}
+                className="w-40 client-input"
               />
-              <label htmlFor="clientEmail" className="mr-1">
-                Email
+              <label htmlFor="paymentdue" className="mr-1">
+                Payment Due
               </label>
               <input
-                name="clientEmail"
+                name="paymentdue"
                 type="text"
-                className="w-100 client-input mb-3"
+                className="w-40 client-input"
               />
             </div> */}
-              
             <div className="product-section">
               <h4 className="items mt-2">Product/Service List</h4>
-              {items.map((item, i) => (
+              {items.map((item, i) => {
+                return (
+                  <div key={i} className="item-table mb-3">
+                    <div className="item1 my-3">
+                      <div className="item1-name">
+                        <input
+                          name="order_title"
+                          type="text"
+                          value={item.order_title}
+                          className="item-name"
+                          placeholder="Product name"
+                          onChange={(e) => handleChange(e, i)}
+                        />
+                      </div>
+                      <div className="item1-qty">
+                        <input
+                          name="quantity"
+                          type="number"
+                          value={item.quantity}
+                          className="item-qty"
+                          placeholder="quantity"
+                          onChange={(e) => handleChange(e, i)}
+                        />
+                      </div>
+                      <div className="item1-price">
+                        <input
+                          name="amount"
+                          type="number"
+                          value={item.amount}
+                          className="item-price w-10"
+                          placeholder="amount"
+                          onChange={(e) => handleChange(e, i)}
+                        />
+                      </div>
+                      <div className="item1-total">
+                        <p>Total item</p>
+                      </div>
+                      <div className="item1-description">
+                        <input
+                          name="description"
+                          type="text"
+                          value={item.description}
+                          className="item-name w-90"
+                          placeholder="Product description"
+                          onChange={(e) => handleChange(e, i)}
+                        />
+                      </div>
+                      <div className="item1-bin">
+                        <i
+                          className="fa fa-trash bin"
+                          onClick={() => handleRemoveInput(i)}
+                        ></i>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+              {/* <Table>
+                <thead>
+                  <tr>
+                    <th>Item Name</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
                 
-              }
-
+              </Table> */}
               <div className="add-btn-wrap">
                 <button onClick={handleAddInput} className="add-btn">
                   <i class="fas fa-plus mr-2"></i>Add New Item
@@ -499,9 +576,6 @@ const InvoiceSummary = () => {
               </div>
             </div>
           </div>
-          https://github.com/Enobaks/office-book-test
-           
-          
         </Modal.Body>
         {/* //The modal footer */}
         <Modal.Footer>
