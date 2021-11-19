@@ -1,0 +1,21 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.details input{
+    height: 2.5rem;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid rgb(141, 144, 150) !important;
+}
+.set-cont{
+    margin: auto;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+}
+.set{
+    height: auto;
+    padding: 1rem;
+}

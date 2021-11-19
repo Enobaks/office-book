@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import "./assets/css/styles.scss";
 import Breadcrumb from "../../layouts/AdminLayout/Breadcrumb";
 
-import logo from "../../assets/images/logo.png";
+import logo from "../../assets/images/custom-logo.png";
 import heroImage1 from "./assets/images/app_hero_1.png";
 import icon1 from "./assets/images/icon1.png";
 import icon2 from "./assets/images/icon2.png";
@@ -47,10 +47,11 @@ const Landing = () => {
           >
             <div className="container">
               <a
-                className="navbar-brand page-scroll bg-transparent"
+                className="navbar-brand page-scroll bg-transparent d-flex invoice-logo"
                 href="#main"
               >
-                <img src={logo} alt="Datta Able Logo" />
+                <img src={logo} alt="Office Book Logo" />
+                <h2>Office Book</h2>
               </a>
               <button
                 className="navbar-toggler hamburger"

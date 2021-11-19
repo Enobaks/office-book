@@ -179,6 +179,11 @@ const routes = [
     component: lazy(() => import("./views/landing")),
   },
   {
+    exact: true,
+    path: "/setup",
+    component: lazy(() => import("./views/setup/Index")),
+  },
+  {
     path: "*",
     layout: AdminLayout,
     guard: AuthGuard,
@@ -858,6 +863,5 @@ const routes = [
     ],
   },
 ];
-
 
 export default routes;
