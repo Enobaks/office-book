@@ -306,7 +306,7 @@ const InvoiceSummary = () => {
                     },
                   });
                 }}
-                className="w-100 company-input mb-3"
+                className="w-100 company-input"
               />
               {errors.company_nameErrors &&
                 displayError(errors.company_nameErrors)}
@@ -360,7 +360,7 @@ const InvoiceSummary = () => {
               <input
                 name="companyWebsite"
                 type="text"
-                className="website company-input mb-3"
+                className="website company-input"
                 onChange={(e) => {
                   setInvDatas({
                     ...invDatas,
@@ -378,7 +378,7 @@ const InvoiceSummary = () => {
               <input
                 name="companyAddress"
                 type="text"
-                className="w-100 company-input mb-3"
+                className="w-100 company-input"
                 onChange={(e) => {
                   setInvDatas({
                     ...invDatas,
@@ -441,7 +441,7 @@ const InvoiceSummary = () => {
               <input
                 name="companyCountry"
                 type="text"
-                className="w-100 company-input mb-3"
+                className="w-100 company-input"
                 onChange={(e) => {
                   setInvDatas({
                     ...invDatas,
@@ -462,7 +462,7 @@ const InvoiceSummary = () => {
               <input
                 name="clientName"
                 type="text"
-                className="w-100 client-input mb-3"
+                className="w-100 client-input"
                 onChange={(e) => {
                   setInvDatas({
                     ...invDatas,
@@ -483,7 +483,7 @@ const InvoiceSummary = () => {
               <input
                 name="clientEmail"
                 type="text"
-                className="w-100 client-input mb-3"
+                className="w-100 client-input"
                 onChange={(e) => {
                   setInvDatas({
                     ...invDatas,
@@ -502,7 +502,7 @@ const InvoiceSummary = () => {
               <input
                 name="clientAddress"
                 type="text"
-                className="w-100 client-input mb-3"
+                className="w-100 client-input"
                 onChange={(e) => {
                   setInvDatas({
                     ...invDatas,
@@ -521,7 +521,7 @@ const InvoiceSummary = () => {
               <input
                 name="clientPhone"
                 type="text"
-                className="w-100 client-input mb-3"
+                className="w-100 client-input"
                 onChange={(e) => {
                   setInvDatas({
                     ...invDatas,
@@ -558,7 +558,7 @@ const InvoiceSummary = () => {
                 className="w-40 client-input"
               />
             </div> */}
-            <div className="product-section">
+            <div className="product-section mt-5">
               <h4 className="items mt-2">Product/Service List</h4>
               {items.map((item, i) => {
                 return (
