@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import {
   validate,
@@ -61,8 +61,8 @@ const Setup = () => {
       setError(errorList, errors, (val) => setErrors({ ...val }));
       return;
     }
-    const logo = image ? image : "";
-    const formDatas = { ...form, logo };
+    // const logo = image ? image : "";
+    // const formDatas = { ...form, logo };
 
     history.push("/app/dashboard/default");
   };

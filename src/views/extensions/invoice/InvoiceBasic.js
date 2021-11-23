@@ -3,7 +3,7 @@ import { useReactToPrint } from "react-to-print";
 import { Link } from "react-router-dom";
 
 import darkLogo from "../../../assets/images/logo-dark.png";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const InvoiceBasic = ({ match }) => {
   const inputEl = useRef(null);

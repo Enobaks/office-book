@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Row, Col, Card, Table, Modal, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 // import ReChartSalesExpenses from "./chart/ReChartSalesExpenses";
@@ -62,7 +62,6 @@ const InvoiceSummary = () => {
     setItems([{ order_title: "", quantity: "", amount: "", description: "" }]);
     setShow(false);
   };
-  const handleShow = () => console.log(show);
   const statsDefault = ["Paid", "Pending", "Draft"];
   const dispatch = useDispatch();
   const { invoiceData } = useSelector((state) => state.invoice);
@@ -142,6 +141,7 @@ const InvoiceSummary = () => {
   const searchInvoice = (value) => {
     setSearchText(value);
     filterData(value);
+    console.log(searchText);
   };
 
   // filter records by search text
