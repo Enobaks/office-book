@@ -7,7 +7,6 @@ export const validate = (obj)=>{
        if(typeof obj[values] === 'object' && Array.isArray(obj[values])){
            console.log(obj[values])
            if(obj[values].length <= 0){
-               console.log('here')
                errs.push(values)
            }
        }
@@ -16,15 +15,41 @@ export const validate = (obj)=>{
                if(obj[values][val].trim().length < 1){
                     errs.push(val)
                }
+               if((val === 'email' || val.includes('mail')) && obj[values][val].trim().length > 0){
+                    if(!validateEmail(obj[values][val].toLowerCase())){
+                        errs.push({value: val, message: 'Kindly input a valid email'})
+                        continue
+                    }
+               }
            }
        }
     }
     return errs
 }
+export const resetErrorObj=(obj, callback)=>{
+    for(let val in obj){
+        obj[val] = ''
+    }
+    callback(obj)
+}
+export function validateEmail(email) {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
 export const setError = (arr, errorObj, callback)=>{
     for(let values of arr){
-        if(errorObj.hasOwnProperty(`${values}Errors`)){
-            errorObj[`${values}Errors`] = `${values} cannot be empty`
+
+        if(typeof values === 'object' && values.value){
+            const {value, message} = values
+            if(errorObj.hasOwnProperty(`${value}Errors`)){
+                errorObj[`${value}Errors`] = message
+                continue
+            }
+        }
+        if(typeof values === 'string'){
+            if(errorObj.hasOwnProperty(`${values}Errors`)){
+                errorObj[`${values}Errors`] = `${values} cannot be empty`
+            }
         }
     }
     callback(errorObj)

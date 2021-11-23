@@ -3,6 +3,16 @@
     margin: 0;
     box-sizing: border-box;
 }
+.details{
+    position: relative;
+    margin: 1em 0;
+}
+
+.details small{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
 .details input{
     height: 2.5rem;
     padding: 5px;
