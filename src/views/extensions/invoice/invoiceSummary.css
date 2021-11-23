@@ -90,12 +90,13 @@
 }
 .short-ctrler{
   width: 50%;
+  display: flex;
+  flex-direction: column;
 }
 .short-ctrler input{
   width: 90%;
 }
 small{
-position: absolute;
 left: 0;
 bottom: 0;
 }
@@ -179,8 +180,7 @@ bottom: 0;
   width: 100%;
 }
 @media (max-width: 900px) {
-  .filter-container {
-  }
+  
   .company-input,
   .client-input {
     width: 100% !important;
@@ -194,6 +194,10 @@ bottom: 0;
   }
   .short-input {
     margin-top: 0 !important;
+    flex-direction: column;
+  }
+  .short-ctrler{
+    width: 100%;
   }
   .payment-wrap .client-input:not(:last-child) {
     margin-bottom: 1rem !important;

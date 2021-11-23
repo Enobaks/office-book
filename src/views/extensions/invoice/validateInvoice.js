@@ -64,13 +64,13 @@ export const displayError = (error)=>{
     if(error.includes("_")){
         const arr = error.split('_')
         return(
-            <small style={{color: "red"}}>
+            <small className="error-txt">
                 {arr[1].charAt(0).toUpperCase() + arr[1].slice(1)}
             </small>
         )
     }
     return(
-        <small style={{color: "red"}}>
+        <small className="error-txt">
             {error.charAt(0).toUpperCase() + error.slice(1)}
         </small>
     )
