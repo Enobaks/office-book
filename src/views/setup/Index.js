@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import {validate, setError, displayError, resetErrorObj} from '../extensions/invoice/validateInvoice'
+import {
+  validate,
+  setError,
+  displayError,
+  resetErrorObj,
+} from "../extensions/invoice/validateInvoice";
 import { Row, Col, Button } from "react-bootstrap";
 // import { useHistory } from "react-router-dom";
 import "./setup.css";
@@ -22,8 +27,8 @@ const Setup = () => {
       zip: "",
       country: "",
       website: "",
-    }
-  })
+    },
+  });
   const currentYear = new Date().getFullYear();
   console.log(currentYear);
 
@@ -46,21 +51,21 @@ const Setup = () => {
     cityErrors: "",
     zipErrors: "",
     countryErrors: "",
-    websiteErrors: ""
-  })
-  const handleSubmit = e => {
+    websiteErrors: "",
+  });
+  const handleSubmit = (e) => {
     e.preventDefault();
-    resetErrorObj(errors, (v)=> setErrors({...v}))
-    const errorList = validate(form)
-    if(errorList.length > 0){
-      setError(errorList, errors, (val)=>setErrors({...val}))
-      return
+    resetErrorObj(errors, (v) => setErrors({ ...v }));
+    const errorList = validate(form);
+    if (errorList.length > 0) {
+      setError(errorList, errors, (val) => setErrors({ ...val }));
+      return;
     }
-    const logo = image ? image : ''
-    const formDatas = {...form, logo}
-    
-    history.push('/app/dashboard/default');
-  }
+    const logo = image ? image : "";
+    const formDatas = { ...form, logo };
+
+    history.push("/app/dashboard/default");
+  };
 
   return (
     <div className="set__up">
@@ -80,107 +85,156 @@ const Setup = () => {
               <form>
                 <div className="details mb-3">
                   <label htmlFor="name">Name</label>
-                  <input type="text" name="name"
-                  value={form.company_info.company_name}
-                  onChange={(e)=>{
-                    setForm({...form, company_info:{
-                      ...form.company_info, company_name: e.target.value
-                    }})
-                  }} 
-                  className="w-100 mb-3" />
+                  <input
+                    type="text"
+                    name="name"
+                    value={form.company_info.company_name}
+                    onChange={(e) => {
+                      setForm({
+                        ...form,
+                        company_info: {
+                          ...form.company_info,
+                          company_name: e.target.value,
+                        },
+                      });
+                    }}
+                    className="w-100"
+                  />
                   {errors.company_nameErrors &&
-                  displayError(errors.company_nameErrors)}
+                    displayError(errors.company_nameErrors)}
                 </div>
                 <div className="details mb-3">
                   <label htmlFor="email">Email</label>
-                  <input type="email" name="email"
-                  value={form.company_info.mail}
-                  onChange={(e)=>{
-                    setForm({...form, company_info:{
-                      ...form.company_info, mail: e.target.value
-                    }})
-                  }}
-                     className="w-100"/>
-                     {errors.mailErrors &&
-                  displayError(errors.mailErrors)}
+                  <input
+                    type="email"
+                    name="email"
+                    value={form.company_info.mail}
+                    onChange={(e) => {
+                      setForm({
+                        ...form,
+                        company_info: {
+                          ...form.company_info,
+                          mail: e.target.value,
+                        },
+                      });
+                    }}
+                    className="w-100"
+                  />
+                  {errors.mailErrors && displayError(errors.mailErrors)}
                 </div>
                 <div className="details mb-3">
                   <label htmlFor="phone">Phone No</label>
-                  <input type="number" name="phone"
-                  value={form.company_info.phone}
-                  onChange={(e)=>{
-                    setForm({...form, company_info:{
-                      ...form.company_info, phone: e.target.value
-                    }})
-                  }}
-                  className="w-100" />
-                  {errors.phoneErrors &&
-                displayError(errors.phoneErrors)}
+                  <input
+                    type="number"
+                    name="phone"
+                    value={form.company_info.phone}
+                    onChange={(e) => {
+                      setForm({
+                        ...form,
+                        company_info: {
+                          ...form.company_info,
+                          phone: e.target.value,
+                        },
+                      });
+                    }}
+                    className="w-100"
+                  />
+                  {errors.phoneErrors && displayError(errors.phoneErrors)}
                 </div>
                 <div className="details mb-3">
                   <label htmlFor="website">Website</label>
-                  <input type="text" name="website"
-                  value={form.company_info.website}
-                  onChange={(e)=>{
-                    setForm({...form, company_info:{
-                      ...form.company_info, website: e.target.value
-                    }})
-                  }}
-                  className="w-100" />
-                  {errors.websiteErrors &&
-                displayError(errors.websiteErrors)}
+                  <input
+                    type="text"
+                    name="website"
+                    value={form.company_info.website}
+                    onChange={(e) => {
+                      setForm({
+                        ...form,
+                        company_info: {
+                          ...form.company_info,
+                          website: e.target.value,
+                        },
+                      });
+                    }}
+                    className="w-100"
+                  />
+                  {errors.websiteErrors && displayError(errors.websiteErrors)}
                 </div>
                 <div className="details mb-3">
                   <label htmlFor="address">Address</label>
-                  <input type="text" name="address"
-                  value={form.company_info.address}
-                  onChange={(e)=>{
-                    setForm({...form, company_info:{
-                      ...form.company_info, address: e.target.value
-                    }})
-                  }}
-                  className="w-100" />
-                  {errors.addressErrors &&
-                  displayError(errors.addressErrors)}
+                  <input
+                    type="text"
+                    name="address"
+                    value={form.company_info.address}
+                    onChange={(e) => {
+                      setForm({
+                        ...form,
+                        company_info: {
+                          ...form.company_info,
+                          address: e.target.value,
+                        },
+                      });
+                    }}
+                    className="w-100"
+                  />
+                  {errors.addressErrors && displayError(errors.addressErrors)}
                 </div>
                 <div className="details mb-3">
                   <label htmlFor="city">City</label>
-                  <input type="text" name="city"
-                  value={form.company_info.city}
-                  onChange={(e)=>{
-                    setForm({...form, company_info:{
-                      ...form.company_info, city: e.target.value
-                    }})
-                  }}
-                  className="w-100" />
-                  {errors.cityErrors &&
-                  displayError(errors.cityErrors)}
+                  <input
+                    type="text"
+                    name="city"
+                    value={form.company_info.city}
+                    onChange={(e) => {
+                      setForm({
+                        ...form,
+                        company_info: {
+                          ...form.company_info,
+                          city: e.target.value,
+                        },
+                      });
+                    }}
+                    className="w-100"
+                  />
+                  {errors.cityErrors && displayError(errors.cityErrors)}
                 </div>
                 <div className="details mb-3">
                   <label htmlFor="zipcode">Zipcode</label>
-                  <input type="number" name="zipcode"
-                  value={form.company_info.zip}
-                  onChange={(e)=>{
-                    setForm({...form, company_info:{
-                      ...form.company_info, zip: e.target.value
-                    }})
-                  }}
-                  className="w-100" />
-                  {errors.zipErrors &&
-                  displayError(errors.zipErrors)}
+                  <input
+                    type="number"
+                    name="zipcode"
+                    value={form.company_info.zip}
+                    onChange={(e) => {
+                      setForm({
+                        ...form,
+                        company_info: {
+                          ...form.company_info,
+                          zip: e.target.value,
+                        },
+                      });
+                    }}
+                    className="w-100"
+                  />
+                  {errors.zipErrors && displayError(errors.zipErrors)}
                 </div>
                 <div className="details mb-3">
                   <label htmlFor="country">Country</label>
-                  <input type="text" name="country"
-                  value={form.company_info.country}
-                  onChange={(e)=>{
-                    setForm({...form, company_info:{
-                      ...form.company_info, country: e.target.value
-                    }})
-                  }}
-                  className="w-100" />
-                  {errors.countryErrors &&
-                  displayError(errors.countryErrors)}
+                  <input
+                    type="text"
+                    name="country"
+                    value={form.company_info.country}
+                    onChange={(e) => {
+                      setForm({
+                        ...form,
+                        company_info: {
+                          ...form.company_info,
+                          country: e.target.value,
+                        },
+                      });
+                    }}
+                    className="w-100"
+                  />
+                  {errors.countryErrors && displayError(errors.countryErrors)}
                 </div>
               </form>
             </Col>
@@ -212,7 +266,9 @@ const Setup = () => {
               </div>
             </Col>
           </Row>
-          <Button variant="primary" className="mt-4" onClick={handleSubmit}>Submit</Button>
+          <Button variant="primary" className="mt-4" onClick={handleSubmit}>
+            Submit
+          </Button>
         </Col>
         <Col md={12} className="d-flex justify-content-center footer my-3">
           {currentYear} Office Book, Inc. All rights reserved
