@@ -52,15 +52,14 @@ const Setup = () => {
     e.preventDefault();
     resetErrorObj(errors, (v)=> setErrors({...v}))
     const errorList = validate(form)
-    console.log(errorList)
     if(errorList.length > 0){
       setError(errorList, errors, (val)=>setErrors({...val}))
       return
     }
-    const formDatas = {...form}
-    console.log(formDatas)
-    // console.log(image)
-    // history.push('/app/dashboard/default');
+    const logo = image ? image : ''
+    const formDatas = {...form, logo}
+    
+    history.push('/app/dashboard/default');
   }
 
   return (
